@@ -1,2 +1,0 @@
-# sonub
-sonub app
