@@ -1,9 +1,0 @@
-[submodule "xbase-api"]
-	path = xbase-api
-	url = https://github.com/thruthesky/xbase-api
-[submodule "firebase-api"]
-	path = firebase-api
-	url = https://github.com/thruthesky/firebase-api
-[submodule "ionic-api"]
-	path = ionic-api
-	url = https://github.com/thruthesky/ionic-api
