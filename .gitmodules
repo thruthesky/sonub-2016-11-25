@@ -1,0 +1,9 @@
+[submodule "src/xbase-api"]
+	path = src/xbase-api
+	url = http://github.com/thruthesky/xbase-api
+[submodule "src/ionic-api"]
+	path = src/ionic-api
+	url = http://github.com/thruthesky/ionic-api
+[submodule "src/firebase-api"]
+	path = src/firebase-api
+	url = http://github.com/thruthesky/firebase-api
