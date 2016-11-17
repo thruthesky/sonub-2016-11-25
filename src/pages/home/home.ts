@@ -4,6 +4,9 @@ import { NavController } from 'ionic-angular';
 import { JobIndexPage } from '../job/index/job-index';
 import { ForumPage } from '../forum/forum';
 
+import { Xbase } from '../../xbase-api/xbase';
+import { XbaseTest } from '../../xbase-api/xbase-test';
+
 
 
 
@@ -12,7 +15,11 @@ import { ForumPage } from '../forum/forum';
   templateUrl: 'home.html'
 })
 export class HomePage {
-  constructor(public navCtrl: NavController) {
+  constructor(public navCtrl: NavController, private xbase: Xbase ) {
+
+
+    new XbaseTest(xbase).run();
+
     
   }
   onClickJob() {
