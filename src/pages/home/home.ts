@@ -22,7 +22,7 @@ export class HomePage {
 
     // new XbaseTest(xbase).run();
     //navCtrl.push( LoginPage );
-
+    navCtrl.push( JobIndexPage );
     
   }
   onClickJob() {
