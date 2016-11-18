@@ -19,8 +19,9 @@
   <section *ngIf=" core.isCordova ">
     <h1>Cordova: Choose Login With</h1>
     <button ion-button (click)="onClickFacebookLogin()">Facebook</button>
-    <button ion-button>Twitter</button>
-    <button ion-button>Google+</button>
+    <button ion-button (click)="onClickTwitterLogin()">Twitter</button>
+    <button ion-button (click)="onClickGooglePlusLogin()">Google+</button>
+    <button ion-button (click)="onClickInstagramLogin()">Instagram</button>
     <button ion-button>PhilGo</button>
   </section>
 

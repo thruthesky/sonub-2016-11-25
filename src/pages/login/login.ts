@@ -39,6 +39,41 @@ export class LoginPage {
       });
 
   }
+  onClickGooglePlusLogin() {
+
+    this.auth.login('google', { remember: true })
+      .then( re => {
+        console.log(re);
+      })
+      .catch( e => {
+        console.log(e);
+      });
+
+  }
+
+  onClickTwitterLogin() {
+
+    this.auth.login('twitter', { remember: true })
+      .then( re => {
+        console.log(re);
+      })
+      .catch( e => {
+        console.log(e);
+      });
+
+  }
+
+  onClickInstagramLogin() {
+
+    this.auth.login('instagram', { remember: true })
+      .then( re => {
+        console.log(re);
+      })
+      .catch( e => {
+        console.log(e);
+      });
+
+  }
 
   onclickRegister() {
     this.navCtrl.push( RegisterPage );
