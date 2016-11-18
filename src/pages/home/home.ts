@@ -9,6 +9,9 @@ import { RegisterPage } from '../register/register';
 import { Xbase } from '../../xbase-api/xbase';
 // import { XbaseTest } from '../../xbase-api/xbase-test';
 
+import { Member,
+         USER_DATA,
+         USER_LOGIN_DATA } from '../../philgo-api/v2/member';
 
 
 
@@ -17,13 +20,34 @@ import { Xbase } from '../../xbase-api/xbase';
   templateUrl: 'home.html'
 })
 export class HomePage {
-  constructor(public navCtrl: NavController, private xbase: Xbase ) {
-
+  login: USER_LOGIN_DATA = <USER_LOGIN_DATA> {};
+  constructor(
+    private navCtrl: NavController,
+    private member: Member,
+    private xbase: Xbase ) {
+    console.log('HomePage::constructor()')
 
     // new XbaseTest(xbase).run();
     //navCtrl.push( LoginPage );
     navCtrl.push( JobIndexPage );
-    
+    // navCtrl.push( RegisterPage );
+
+  }
+  ionViewWillEnter() {
+    console.log('HomePage::ionViewWillEnter()')
+    this.checkLogin();
+  }
+  checkLogin() {
+    this.member.logged( x => {
+      this.login = x;
+    },
+    () => this.login = null );
+  }
+  onClickLogout() {
+    this.member.logout( () => this.checkLogin() );
+  }
+  onClickProfileUpdate() {
+    this.onClickRegister();
   }
   onClickJob() {
     this.navCtrl.push( JobIndexPage );
