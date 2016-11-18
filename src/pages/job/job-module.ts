@@ -5,13 +5,15 @@ import { JobPostPage } from './post/job-post';
 
 @NgModule({
   declarations: [
-    JobIndexPage
+    JobIndexPage,
+    JobPostPage
   ],
   imports: [
       IonicModule
   ],
   entryComponents: [
-      JobIndexPage
+      JobIndexPage,
+      JobPostPage
   ],
   providers: []
 })

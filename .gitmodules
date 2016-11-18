@@ -7,3 +7,6 @@
 [submodule "src/firebase-api"]
 	path = src/firebase-api
 	url = http://github.com/thruthesky/firebase-api
+[submodule "src/philgo-api"]
+	path = src/philgo-api
+	url = http://github.com/thruthesky/philgo-api
