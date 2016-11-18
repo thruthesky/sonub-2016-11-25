@@ -4,6 +4,7 @@ import { NavController } from 'ionic-angular';
 import { LoginPage } from '../login/login';
 import { JobIndexPage } from '../job/index/job-index';
 import { ForumPage } from '../forum/forum';
+import { RegisterPage } from '../register/register';
 
 import { Xbase } from '../../xbase-api/xbase';
 // import { XbaseTest } from '../../xbase-api/xbase-test';
@@ -32,5 +33,8 @@ export class HomePage {
   }
   onClickLogin() {
     this.navCtrl.push( LoginPage );
+  }
+  onClickRegister() {
+    this.navCtrl.push( RegisterPage );
   }
 }

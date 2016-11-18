@@ -40,7 +40,7 @@ export class LoginPage {
 
   }
 
-  onclickRegister() {
+  onClickRegister() {
     this.navCtrl.push( RegisterPage );
   }
 
