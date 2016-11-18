@@ -31,7 +31,7 @@ export class JobPostPage {
     appTitle: string = "Post Edit";
     data : PostEdit = <PostEdit> {};
 
-    urlPhoto: string = "assets/img/photo.png";
+    urlPhoto: string = "assets/img/anonymous.gif";
     loader: boolean = false;
     postKey: string;
     photoId: number = 0;
