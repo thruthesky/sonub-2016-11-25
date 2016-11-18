@@ -1,18 +1,87 @@
-<!--
-  Generated template for the Register page.
-
-  See http://ionicframework.com/docs/v2/components/#navigation for more info on
-  Ionic pages and navigation.
--->
 <ion-header>
-
   <ion-navbar>
-    <ion-title>register</ion-title>
+    <ion-title>
+      <div *ngIf=" login ">
+        Update Profile
+      </div>
+      <div *ngIf=" ! login ">
+        Register
+      </div>
+    </ion-title>
   </ion-navbar>
-
 </ion-header>
-
 
 <ion-content padding>
 
+    <ion-list>
+      <ion-item>
+        <div (click)="onClickPhoto()">
+        
+          <img [src]="urlPhoto">
+        </div>
+        <div *ngIf=" form?.urlPhoto ">
+          <button ion-button (click)="onClickDeletePhoto()">DELETE</button>
+        </div>
+        <input *ngIf=" core.isWeb " type="file" (change)="onChangeFile($event)">
+       
+      </ion-item>
+
+
+
+      <ion-item *ngIf=" ! login ">
+        <ion-label floating>User Id</ion-label>
+        <ion-input type='text' [(ngModel)]="form.id" ></ion-input>
+      </ion-item>
+      
+      <ion-item *ngIf=" ! login ">
+         <ion-label floating>Password</ion-label>
+         <ion-input type = 'password' [(ngModel)]="form.password"></ion-input>
+      </ion-item>
+
+       <ion-item>
+        <ion-label floating>Name</ion-label>
+        <ion-input type='text' [(ngModel)]="form.name" ></ion-input>
+      </ion-item>
+
+       <ion-item *ngIf=" ! login ">
+        <ion-label floating>Nickname</ion-label>
+        <ion-input type='text' [(ngModel)]="form.nickname" ></ion-input>
+      </ion-item>
+
+       <ion-item>
+        <ion-label floating>Email</ion-label>
+        <ion-input type='text' [(ngModel)]="form.email" ></ion-input>
+      </ion-item>
+
+       <ion-item>
+        <ion-label floating>Mobile</ion-label>
+        <ion-input type='text' [(ngModel)]="form.mobile" ></ion-input>
+      </ion-item>
+
+       <ion-item>
+        <ion-label floating>Gender</ion-label>
+        <ion-input type='text' [(ngModel)]="form.gender" ></ion-input>
+      </ion-item>
+
+       <ion-item>
+        <ion-label floating>Birth Day</ion-label>
+        <ion-input type='date' [(ngModel)]="form.birthday" ></ion-input>
+      </ion-item>
+
+    </ion-list>
+
+
+    <div notice *ngIf=" process.loader ">
+      <ion-spinner></ion-spinner> Please, wait.
+    </div>
+    <div warning *ngIf=" process.error ">
+      {{ process.error }}
+    </div>
+  
+      <button *ngIf=" ! login " ion-button (click)="onClickRegister()">Register</button>
+      <button *ngIf=" login " ion-button (click)="onClickUpdate()">UPDATE</button>
+
+      <button ion-button (click)="onClickCancel()">CANCEL</button>
+     
+  
 </ion-content>
