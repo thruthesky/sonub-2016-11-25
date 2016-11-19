@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { Member,
-         USER_DATA,
+         USER_DATA, userData,
          USER_LOGIN_DATA } from '../../philgo-api/v2/member';
 import * as it from '../../providers/interface';
+import { Xbase } from '../../xbase-api/xbase';
 import { Core } from '../../providers/core';
 
 import { HomePage } from '../home/home';
@@ -15,29 +16,22 @@ import { HomePage } from '../home/home';
 export class RegisterPage {
 
   login: USER_LOGIN_DATA = <USER_LOGIN_DATA> {};
-  form = <USER_DATA> {};
+  form: USER_DATA = userData;
   process: it.FORM_PROCESS = it.formProcess;
   urlPhoto = 'assets/img/anonymous.gif';
 
   constructor(
     private navCtrl: NavController,
     private navParams: NavParams,
+    private core: Core,
     private member: Member,
-    private core: Core
+    private xbase: Xbase
   ) {
 
     console.log("RegisterPage::constructor() : navParams: ", this.navParams.data) ;
 
     this.checkLogin();
 
-    // test registration on xbase
-      this.registerXbase( () => {
-
-        alert("Registration Success!");
-      },
-      e => {
-        alert("Error: " + e);
-      });
   }
 
   checkLogin() {
@@ -80,9 +74,6 @@ export class RegisterPage {
       }
       else this.process = { 'error': e };
     })
-  }
-  registerXbase( successCallback, failureCallback ) {
-
   }
 
 
@@ -129,4 +120,22 @@ export class RegisterPage {
     console.log('RegisterPage::ionViewDidLoad()');
   }
 
+  /**
+   * Register into xbase
+   * @Attention this method is invoked right after philgo register, once philgo register success, then there should be no error registering in xbase.
+   */
+  registerXbase( successCallback, failureCallback ) {
+    let registerData = {
+      id: this.form.id,
+      password: '~philgo.com@' + this.form.id,
+      email: this.form.email
+    };
+    console.log("registerXbase: registerData: ", registerData);
+    this.xbase.user_register( registerData, session_id => {
+      console.log('xbase register ok: session_id: ' + session_id);
+    }, e => {
+      console.error('xbase register failed: ' + e);
+    });
+
+  }
 }

@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { IonicApp, IonicModule } from 'ionic-angular';
 import { XbaseApiModule, LINKS as XBASE_API_LINKS } from '../xbase-api/xbase-api-module';
-import { PhilgoApiModule } from '../philgo-api/v2/philgo-module';
-import { IonicApiModule } from '../ionic-api/ionic-module';
+import { PhilgoApiModule } from '../philgo-api/v2/philgo-api-module';
+import { IonicApiModule } from '../ionic-api/ionic-api-module';
 import { JobModule } from '../pages/job/job-module';
 import { ForumModule, LINKS as FORUM_LINKS } from '../pages/forum/forum-module';
 import { Core } from '../providers/core';
@@ -14,10 +14,12 @@ import { ForumPage } from '../pages/forum/forum';
 
 let links: Array<{ component: any; name: any; segment: any }> = [
   { component: HomePage, name: 'Home', segment: 'home' },
-  { component: RegisterPage, name: 'Register', segment: 'register/:user' }
+  { component: RegisterPage, name: 'Register', segment: 'register' },
+  { component: LoginPage, name: 'Login', segment: 'login' }
 ];
-for( let link of FORUM_LINKS ) { links.push( link ); }
-for( let link of XBASE_API_LINKS ) { links.push( link ); }
+FORUM_LINKS.map( e => links.push( e ) );
+XBASE_API_LINKS.map( e => links.push(e) );
+
 
 @NgModule({
   declarations: [

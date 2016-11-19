@@ -3,11 +3,10 @@ import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { LoginPage } from '../login/login';
 import { JobIndexPage } from '../job/index/job-index';
-//import { ForumPage } from '../forum/forum';
+import { ForumPage } from '../forum/forum';
 import { RegisterPage } from '../register/register';
 
 import { Xbase } from '../../xbase-api/xbase';
-// import { XbaseTest } from '../../xbase-api/xbase-test';
 
 import { Member,
          USER_DATA,
@@ -25,12 +24,11 @@ export class HomePage {
     private navCtrl: NavController,
     private member: Member,
     private xbase: Xbase ) {
-    console.log('HomePage::constructor()')
+    console.log('HomePage::constructor()');
 
-    // new XbaseTest(xbase).run();
-    //navCtrl.push( LoginPage );
-//    navCtrl.push( JobIndexPage );
-    // navCtrl.push( RegisterPage );
+    // No more page move here.
+    // Use DeepLinker
+
 
   }
   ionViewWillEnter() {
@@ -53,7 +51,7 @@ export class HomePage {
     this.navCtrl.push( JobIndexPage );
   }
   onClickForum() {
-//    this.navCtrl.push( ForumPage );
+    this.navCtrl.push( ForumPage );
   }
   onClickLogin() {
     this.navCtrl.push( LoginPage );
