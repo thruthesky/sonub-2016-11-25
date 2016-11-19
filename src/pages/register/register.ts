@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, NavParams } from 'ionic-angular';
 import { Member,
          USER_DATA,
          USER_LOGIN_DATA } from '../../philgo-api/v2/member';
@@ -21,9 +21,12 @@ export class RegisterPage {
 
   constructor(
     private navCtrl: NavController,
+    private navParams: NavParams,
     private member: Member,
     private core: Core
   ) {
+
+    console.log("RegisterPage::constructor() : navParams: ", this.navParams.data) ;
 
     this.checkLogin();
 
@@ -65,7 +68,6 @@ export class RegisterPage {
       this.navCtrl.setRoot( HomePage );
       // @todo register in xbase.
       this.registerXbase( () => {
-
         alert("Registration Success!");
       },
       e => {

@@ -18,16 +18,21 @@ Social Netowrk Hub
 
 # TEST
 
-## How to write tests
+* All test must follow DeepLinker test.
+* For instance, a test might be run like below.
 
-import { XbaseTest } from '../../xbase-api/xbase-test';
+    * /test/xbase for all the xbsae test
+    * /test/xbase/test_user_get for xbase test_user_get method test
 
-    new XbaseTest(xbase).run();
+* @see Xbase Test
+
 
 
 
 # INSTALL
 
+* git submodule update --init
+* git submodule foreach git checkout master
 * npm install @ionic/cloud-angular --save
 * App ID and settings are already done in the code. @see http://docs.ionic.io/setup.html#app-id
 * cordova plugin add cordova-plugin-inappbrowser --save

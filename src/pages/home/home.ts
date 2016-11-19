@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { LoginPage } from '../login/login';
 import { JobIndexPage } from '../job/index/job-index';
-import { ForumPage } from '../forum/forum';
+//import { ForumPage } from '../forum/forum';
 import { RegisterPage } from '../register/register';
 
 import { Xbase } from '../../xbase-api/xbase';
@@ -29,7 +29,7 @@ export class HomePage {
 
     // new XbaseTest(xbase).run();
     //navCtrl.push( LoginPage );
-    navCtrl.push( JobIndexPage );
+//    navCtrl.push( JobIndexPage );
     // navCtrl.push( RegisterPage );
 
   }
@@ -53,7 +53,7 @@ export class HomePage {
     this.navCtrl.push( JobIndexPage );
   }
   onClickForum() {
-    this.navCtrl.push( ForumPage );
+//    this.navCtrl.push( ForumPage );
   }
   onClickLogin() {
     this.navCtrl.push( LoginPage );
