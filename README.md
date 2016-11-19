@@ -21,8 +21,8 @@ Social Netowrk Hub
 * All test must follow DeepLinker test.
 * For instance, a test might be run like below.
 
-    * /test/xbase for all the xbsae test
-    * /test/xbase/test_user_get for xbase test_user_get method test
+    * "http://localhost:8100/#/test/xbase" for all the xbsae test
+    * "http://localhost:8100/#/test/xbase/test_user_search" for xbase test_user_get method test
 
 * @see Xbase Test
 
