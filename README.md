@@ -2,6 +2,12 @@
 
 Social Netowrk Hub
 
+# TODO
+
+    * Philgo Login and Xbase Auto Login.
+    * Philgo Logout and Xbase auto logout.
+    * @done ~~Philgo Registration and Xbase auto Registration~~
+
 # Flowcharts
 
 * [Home](https://docs.google.com/drawings/d/1vq_-wilfcf8XVJ-xC7CZagOiZ09LrjUEXcPJsrRltQ4/edit)
@@ -12,7 +18,9 @@ Social Netowrk Hub
 
 # Resources
 
+* [Mark Down  Cheatsheet](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet)
 * [Resources for Design and Layout](https://drive.google.com/drive/u/0/folders/0B4u3qiWTgOC-UVA1ZkFkYjlQNk0)
+
 
 
 
