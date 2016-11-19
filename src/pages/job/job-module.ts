@@ -3,10 +3,13 @@ import { IonicModule } from 'ionic-angular';
 import { JobIndexPage } from './index/job-index';
 import { JobPostPage } from './post/job-post';
 
+import { AgeCalculator } from "./pipes/age-calculator";
+
 @NgModule({
   declarations: [
     JobIndexPage,
-    JobPostPage
+    JobPostPage,
+    AgeCalculator
   ],
   imports: [
       IonicModule

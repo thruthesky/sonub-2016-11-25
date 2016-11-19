@@ -29,8 +29,9 @@ export class HomePage {
 
     // new XbaseTest(xbase).run();
     //navCtrl.push( LoginPage );
+    navCtrl.push( JobIndexPage );
     // navCtrl.push( RegisterPage );
-    
+
   }
   ionViewWillEnter() {
     console.log('HomePage::ionViewWillEnter()')
