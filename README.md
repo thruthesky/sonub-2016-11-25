@@ -24,7 +24,8 @@ Social Netowrk Hub
     * "http://localhost:8100/#/test/xbase" for all the xbsae test
     * "http://localhost:8100/#/test/xbase/test_user_search" for xbase test_user_get method test
 
-* @see Xbase Test
+* @see [Xbase Api Module](https://github.com/thruthesky/xbase-api/blob/master/xbase-api-module.ts)
+* @see [Xbase Test Component](https://github.com/thruthesky/xbase-api/blob/master/xbase-test.ts)
 
 
 
