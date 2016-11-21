@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Platform, NavController } from 'ionic-angular';
-import { Auth as facebookAuth, User as facebookUser } from '@ionic/cloud-angular';
+import { Auth , User  } from '@ionic/cloud-angular';
 import { Core } from '../../providers/core';
 import { RegisterPage } from '../register/register';
 
@@ -14,8 +14,8 @@ export class LoginPage {
   constructor(
     private platform: Platform,
     private navCtrl: NavController,
-    private auth: facebookAuth,
-    private user: facebookUser,
+    private auth: Auth,
+    private user: User,
     public core: Core
     ) {
 
