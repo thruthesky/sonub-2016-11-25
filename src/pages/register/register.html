@@ -19,7 +19,7 @@
         
           <img [src]="urlPhoto">
         </div>
-        <div *ngIf=" form?.urlPhoto ">
+        <div *ngIf=" form?.varchar_1">
           <button ion-button (click)="onClickDeletePhoto()">DELETE</button>
         </div>
         <input *ngIf=" core.isWeb " type="file" (change)="onChangeFile($event)">
@@ -27,6 +27,10 @@
       </ion-item>
 
 
+       <ion-item>
+        <ion-label floating>varchar_1</ion-label>
+        <ion-input [(ngModel)]="form.varchar_1" ></ion-input>
+      </ion-item>
 
       <ion-item *ngIf=" ! login ">
         <ion-label floating>User Id</ion-label>

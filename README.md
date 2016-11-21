@@ -4,12 +4,19 @@ Social Netowrk Hub
 
 # TODO
 
+    - [ ] Social login & Register/log in philgo and xbase 
+    - [ ] If user has not photo, Photo Upload on User Profile. Social login users may have picture.
+    - [ ] Post CRUD & Comment CRUD on PhilGo.com
+    - [ ] Post CRUD & Comment CRUD on Xbase
+    - [ ] Search on Xbase
+    - [ ] Search on Philgo of google.
+    - [ ] @later Need to improve Xbase login password for security.
+    - [ ] @later Philgo Logout and Xbase auto logout. At this time, when a user logs out in philgo, the user does not log out in xbase.
     - [x] @done *Philgo Login and Xbase Auto Login.*
-    - Philgo Logout and Xbase auto logout.
-    - Need to improve Xbase login password for security.
     - [x] @done *Philgo Registration and Xbase auto Registration
 
 # Flowcharts
+
 
 * [Home](https://docs.google.com/drawings/d/1vq_-wilfcf8XVJ-xC7CZagOiZ09LrjUEXcPJsrRltQ4/edit)
 * [Register](https://docs.google.com/drawings/d/1Bw22pNiOE5jLUcLCUPVnxVidpg_mE_GCm2zPfCwQJdk/edit)
