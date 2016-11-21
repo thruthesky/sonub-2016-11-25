@@ -40,10 +40,10 @@ export class LoginPage {
     console.log("LoginPage::onClickLogin() form: ", this.form);
     this.process = { 'loader' : true };
       this.member.login( this.form, ( login: USER_LOGIN_DATA ) => {
-        this.xbaseLogin( () => {
-          alert('Login success !');
-          this.navCtrl.setRoot( HomePage );
-        });
+        // this.xbaseLogin( () => {
+        //   alert('Login success !');
+        //   this.navCtrl.setRoot( HomePage );
+        // });
       },
       e => {
         this.process = { 'error' : e };
@@ -52,12 +52,12 @@ export class LoginPage {
   
   xbaseLogin( successCallback ) {
     let data = {id: this.form.id, password: '~philgo.com@' + this.form.id};
-    this.xbase.user_login( data, session_id => {
-      console.log("xbaseLogin() : success : session_id: " + session_id )
-      successCallback();
-    }, e => {
-      console.error('error login xbase: ' + e);
-    });
+    // this.xbase.user_login( data, session_id => {
+    //   console.log("xbaseLogin() : success : session_id: " + session_id )
+    //   successCallback();
+    // }, e => {
+    //   console.error('error login xbase: ' + e);
+    // });
   }
 
   onClickFacebookLogin() {

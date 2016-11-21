@@ -61,6 +61,17 @@ export class RegisterPage {
       alert("error: " + e);
     });
   }
+
+
+  onClickRegisterXbase(){
+     this.registerXbase( () => {
+        alert("Registration Success!");
+      },
+      e => {
+        alert("Error: " + e);
+      });
+  }
+
   onClickRegister() {
     console.log('onClickRegister():', this.form);
     this.process  = { 'loader': true };
