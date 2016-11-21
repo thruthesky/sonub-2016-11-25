@@ -4,10 +4,13 @@ import { NavController } from 'ionic-angular';
 import { LoginPage } from '../login/login';
 import { JobIndexPage } from '../job/index/job-index';
 import { ForumPage } from '../forum/forum';
+import { RegisterPage } from '../register/register';
 
 import { Xbase } from '../../xbase-api/xbase';
-// import { XbaseTest } from '../../xbase-api/xbase-test';
 
+import { Member,
+         USER_DATA,
+         USER_LOGIN_DATA } from '../../philgo-api/v2/member';
 
 
 
@@ -16,13 +19,39 @@ import { Xbase } from '../../xbase-api/xbase';
   templateUrl: 'home.html'
 })
 export class HomePage {
-  constructor(public navCtrl: NavController, private xbase: Xbase ) {
+  login: USER_LOGIN_DATA = <USER_LOGIN_DATA> {};
+  constructor(
+    private navCtrl: NavController,
+    private member: Member,
+    private xbase: Xbase ) {
+    console.log('HomePage::constructor()');
+
+    // No more page move here.
+    // Use DeepLinker
 
 
-    // new XbaseTest(xbase).run();
-    //navCtrl.push( LoginPage );
-
-    
+  }
+  ionViewWillEnter() {
+    console.log('HomePage::ionViewWillEnter()')
+    this.checkLogin();
+  }
+  checkLogin() {
+    this.member.logged( x => {
+      console.log("checkLogin::philgo login ok: login info : ", x);
+      this.login = x;
+      this.xbase.logged( x => {
+        console.log("checkLogin::xbase login ok: session_id: " + x);
+      }, () => {
+        console.log("checkLogin::xbase NOT login");
+      });
+    },
+    () => this.login = null );
+  }
+  onClickLogout() {
+    this.member.logout( () => this.checkLogin() );
+  }
+  onClickProfileUpdate() {
+    this.onClickRegister();
   }
   onClickJob() {
     this.navCtrl.push( JobIndexPage );
@@ -32,5 +61,8 @@ export class HomePage {
   }
   onClickLogin() {
     this.navCtrl.push( LoginPage );
+  }
+  onClickRegister() {
+    this.navCtrl.push( RegisterPage );
   }
 }

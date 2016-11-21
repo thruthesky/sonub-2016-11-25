@@ -2,12 +2,27 @@
   <ion-navbar>
     <ion-title>
       <button ion-button (click)="onClickJob()">Job</button>
-      <ion-icon name="albums" (click)="onClickForum()"></ion-icon>
+      <button ion-button (click)="onClickForum()">Forum</button>
       <button ion-button (click)="onClickLogin()">LOGIN</button>
+      <button ion-button (click)="onClickRegister()">Register</button>
     </ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
   <h1>Sonub Homepage</h1>
+
+
+  <section *ngIf=" login ">
+      <button ion-button (click)="onClickLogout()">LOGOUT</button>
+      <button ion-button (click)="onClickProfileUpdate()">PROFILE UPDATE</button>
+  </section>
+  <section *ngIf=" ! login ">
+      <button ion-button (click)="onClickLogin()">LOGIN</button>
+      <button ion-button (click)="onClickRegister()">Register</button>
+  </section>
+
+
+      <button ion-button (click)="onClickJob()">Job</button>
+      <button ion-button (click)="onClickForum()">Forum</button>
 </ion-content>

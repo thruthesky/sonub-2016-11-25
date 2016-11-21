@@ -30,13 +30,15 @@
     <ion-list>
       <ion-item>
         <ion-label>User ID</ion-label>
-        <ion-input [(ngModel)]="user.id"></ion-input>
+        <ion-input [(ngModel)]="form.id" clearInput></ion-input>
       </ion-item>
       <ion-item>
         <ion-label>User Password</ion-label>
-        <ion-input [(ngModel)]="user.password"></ion-input>
+        <ion-input [(ngModel)]="form.password" clearOnEdit></ion-input>
       </ion-item>
     </ion-list>
+    <div *ngIf=" process.loader "><ion-spinner></ion-spinner> Login ...</div>
+    <div *ngIf=" process.error "> Error: {{ process.error }}</div>
     <button ion-button (click)="onClickLogin()">LOGIN</button>
     <button ion-button (click)="onClickRegister()">REGISTER</button>
   </section>
