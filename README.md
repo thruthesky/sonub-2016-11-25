@@ -1,17 +1,22 @@
+
 # SONUB
+
 
 Social Netowrk Hub
 
 # TODO
 
-    - [ ] Social login & Register/log in philgo and xbase 
     - [ ] If user has not photo, Photo Upload on User Profile. Social login users may have picture.
     - [ ] Post CRUD & Comment CRUD on PhilGo.com
     - [ ] Post CRUD & Comment CRUD on Xbase
     - [ ] Search on Xbase
     - [ ] Search on Philgo of google.
+    - [ ] Social login & Register/log in philgo and xbase 
+        - @comment : to work on this part, livereload must work on device.
+
     - [ ] @later Need to improve Xbase login password for security.
     - [ ] @later Philgo Logout and Xbase auto logout. At this time, when a user logs out in philgo, the user does not log out in xbase.
+
     - [x] @done *Philgo Login and Xbase Auto Login.*
     - [x] @done *Philgo Registration and Xbase auto Registration
 
@@ -59,9 +64,20 @@ Social Netowrk Hub
 
 # User Registration
 
-* @see [User Registration Doc]
+* @see [User Registration Doc](https://github.com/thruthesky/sonub/tree/master/src/pages/register)
 
 # User Login
 
-* @see [User Login Doc]
+* @see [User Login Doc](https://github.com/thruthesky/sonub/tree/master/src/pages/login)
 
+
+
+
+# Security
+
+* When a user logs in through Social,
+
+    * A random password will be generated to register PhilGo and Xbase.
+    * The password must be not gussable.
+    * The login session information should be saved in storage.
+        * if storage cleared or logged out, the user must re-register.

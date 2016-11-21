@@ -29,6 +29,7 @@ export class LoginPage {
     ) {
 
 
+      console.log("LoginPage::constructor()");
 
     }
 
@@ -88,7 +89,16 @@ export class LoginPage {
     this.auth.login('twitter', { remember: true })
       .then( re => {
         console.log(re);
-        console.log("user: ", this.user.details );
+        console.log('user details: ');
+        console.log(this.user.details );
+
+        let details: any = this.user.details;
+        let twitter_id: string = details.twitter_id;
+        let id = twitter_id + '@twitter.com';
+        this.registerPhilgo( id, re => this.registerXbase(id, session_id =>{
+          console.log('register success: session_id: ', session_id);
+        }) );
+
       })
       .catch( e => {
         console.log(e);
@@ -110,6 +120,34 @@ export class LoginPage {
 
   onClickRegister() {
     this.navCtrl.push( RegisterPage );
+  }
+
+  registerPhilgo( id, callback ) {
+    let data = {
+      id: id,
+      nickname: id,
+      password: this.core.getSocialPassword( id ),
+      name: id,
+      email: id + '@gmail.com',
+      mobile: '01234567890',
+      gender: 'M'
+    };
+    this.member.register( data , callback, e => console.log(e) );
+  }
+  registerXbase( id, callback ) {
+
+    let registerData = {
+      id: id,
+      password: '~philgo.com@' + this.form.id,
+      email: this.form.id + '@philgo.com'
+    };
+    console.log("registerXbase: registerData: ", registerData);
+    this.xbase.user_register( registerData, session_id => {
+      console.log('xbase register ok: session_id: ' + session_id);
+    }, e => {
+      console.error('xbase register failed: ' + e);
+    });
+
   }
 
 }

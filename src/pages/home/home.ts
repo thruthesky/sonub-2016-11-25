@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
-import { NavController } from 'ionic-angular';
+import { Platform, NavController } from 'ionic-angular';
 import { LoginPage } from '../login/login';
 import { JobIndexPage } from '../job/index/job-index';
 import { ForumPage } from '../forum/forum';
@@ -19,8 +19,9 @@ import { Member,
   templateUrl: 'home.html'
 })
 export class HomePage {
-  login: USER_LOGIN_DATA = <USER_LOGIN_DATA> {};
+  login: USER_LOGIN_DATA = null;
   constructor(
+    private platform: Platform,
     private navCtrl: NavController,
     private member: Member,
     private xbase: Xbase
@@ -29,6 +30,12 @@ export class HomePage {
 
     // No more page move here.
     // Use DeepLinker
+
+    this.platform.ready().then( () => {
+      if ( this.platform.is('cordova') ) console.log("Cordova");
+      else console.log("NOT Cordova");
+    });
+
 
   }
   ionViewWillEnter() {
