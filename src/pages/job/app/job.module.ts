@@ -1,21 +1,19 @@
 import { NgModule } from '@angular/core';
 import { IonicModule } from 'ionic-angular';
-import { JobIndexPage } from './index/job-index';
-import { JobPostPage } from './post/job-post';
+import { JobHomePage } from '../pages/home/job-home';
+import { JobPostPage } from '../pages/post/job-post';
 
-import { AgeCalculator } from "./pipes/age-calculator";
 
 @NgModule({
   declarations: [
-    JobIndexPage,
+    JobHomePage,
     JobPostPage,
-    AgeCalculator
   ],
   imports: [
       IonicModule
   ],
   entryComponents: [
-      JobIndexPage,
+      JobHomePage,
       JobPostPage
   ],
   providers: []

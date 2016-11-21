@@ -9,8 +9,7 @@
 
 <ion-content padding>
 
-
-    <ion-item>
+    <!--ion-item>
         <div *ngIf=" urlPhoto " (click)="onClickPhoto()">
             <img [src]="urlPhoto">
         </div>
@@ -21,12 +20,8 @@
         <div *ngIf=" file_progress ">
             <progress [value]="position" max="100"></progress>
         </div>
-    </ion-item>
-
-
-
-
-    <hr>
+    </ion-item-->
+    <!--hr-->
     <ion-list text-wrap>
 
         <ion-item-divider light>
@@ -34,8 +29,29 @@
         </ion-item-divider>
 
         <ion-item>
-            <ion-label floating>{{text.password}}</ion-label>
+            <ion-label floating>Work Profession</ion-label>
+            <ion-select [(ngModel)]="data.profession" placeholder="Select Profession" margin-left>
+                <ion-option value="housemaid" >Housemaid</ion-option>
+                <ion-option value="driver" >Driver</ion-option>
+            </ion-select>
+        </ion-item>
+
+        <ion-item>
+            <ion-label floating>{{text.gender}}</ion-label>
+            <ion-select [(ngModel)]="data.gender" placeholder="Select Gender" margin-left>
+                <ion-option value="F" >{{text.female}}</ion-option>
+                <ion-option value="M" >{{text.male}}</ion-option>
+            </ion-select>
+        </ion-item>
+
+        <ion-item>
+            <ion-label floating>{{text.password}} ( is required to edit your own post )</ion-label>
             <ion-input [(ngModel)]="data.password"></ion-input>
+        </ion-item>
+
+        <ion-item>
+            <ion-label floating>{{text.email}}</ion-label>
+            <ion-input [(ngModel)]="data.email"></ion-input>
         </ion-item>
 
         <ion-item>
@@ -54,21 +70,13 @@
         </ion-item>
 
         <ion-item>
-            <ion-label floating>{{text.gender}}</ion-label>
-            <ion-select [(ngModel)]="data.gender" placeholder="Select Gender" margin-left>
-                <ion-option value="F" >{{text.female}}</ion-option>
-                <ion-option value="M" >{{text.male}}</ion-option>
-            </ion-select>
-        </ion-item>
-
-        <ion-item>
             <ion-label floating>{{text.mobile}}</ion-label>
             <ion-input [(ngModel)]="data.mobile"></ion-input>
         </ion-item>
 
         <ion-item>
             <ion-label floating>{{text.birthday}}</ion-label>
-            <ion-datetime displayFormat="YYYY/DD/MM" pickerFormat="MMMM DD YYYY" [(ngModel)]="data.birthday" margin-left></ion-datetime>
+            <ion-datetime displayFormat="YYYY/DD/MM" pickerFormat="MMMM DD YYYY" [(ngModel)]="data.extra_1" margin-left></ion-datetime>
             <ion-icon name="calendar" item-right=""></ion-icon>
         </ion-item>
 
@@ -78,13 +86,33 @@
         </ion-item>
 
         <ion-item>
+            <ion-label floating>{{text.city}}</ion-label>
+            <ion-input text-wrap [(ngModel)]="data.city" ></ion-input>
+        </ion-item>
+
+        <ion-item>
+            <ion-label floating>{{text.province}}</ion-label>
+            <ion-input text-wrap [(ngModel)]="data.province" ></ion-input>
+        </ion-item>
+
+        <ion-item>
+            <ion-label floating>{{text.country}}</ion-label>
+            <ion-input text-wrap [(ngModel)]="data.country" ></ion-input>
+        </ion-item>
+
+        <ion-item>
+            <ion-label floating>{{text.workExperience}}</ion-label>
+            <ion-input text-wrap [(ngModel)]="data.extra_2" ></ion-input>
+        </ion-item>
+
+        <ion-item>
             <ion-label floating>{{text.personalTitle}}</ion-label>
-            <ion-input [(ngModel)]="data.post_title"></ion-input>
+            <ion-input [(ngModel)]="data.title"></ion-input>
         </ion-item>
 
         <ion-item>
             <ion-label floating>{{text.personalContent}}</ion-label>
-            <ion-textarea [(ngModel)]="data.post_content" ></ion-textarea>
+            <ion-textarea [(ngModel)]="data.content" ></ion-textarea>
         </ion-item>
 
     </ion-list>
