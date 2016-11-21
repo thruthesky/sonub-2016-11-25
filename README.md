@@ -4,9 +4,10 @@ Social Netowrk Hub
 
 # TODO
 
-    * Philgo Login and Xbase Auto Login.
-    * Philgo Logout and Xbase auto logout.
-    * @done ~~Philgo Registration and Xbase auto Registration~~
+    - [x] @done *Philgo Login and Xbase Auto Login.*
+    - Philgo Logout and Xbase auto logout.
+    - Need to improve Xbase login password for security.
+    - [x] @done *Philgo Registration and Xbase auto Registration
 
 # Flowcharts
 
@@ -19,6 +20,7 @@ Social Netowrk Hub
 # Resources
 
 * [Mark Down  Cheatsheet](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet)
+* [Github MarkDown Guide](https://guides.github.com/features/mastering-markdown/)
 * [Resources for Design and Layout](https://drive.google.com/drive/u/0/folders/0B4u3qiWTgOC-UVA1ZkFkYjlQNk0)
 
 
@@ -102,3 +104,7 @@ Social Netowrk Hub
 
 
 
+## User Registration PhilGo and Xbase
+
+  * Xbase user ID is "philgo_user_id@philgo.com"
+  * Xbase user Password is "~philgo.com@philgo_user_id"

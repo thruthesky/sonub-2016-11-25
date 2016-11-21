@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { Member,
-         USER_DATA, userData,
+         USER_DATA,
          USER_LOGIN_DATA } from '../../philgo-api/v2/member';
 import * as it from '../../providers/interface';
 import { Xbase } from '../../xbase-api/xbase';
@@ -16,14 +16,14 @@ import { HomePage } from '../home/home';
 export class RegisterPage {
 
   login: USER_LOGIN_DATA = <USER_LOGIN_DATA> {};
-  form: USER_DATA = userData;
+  form: USER_DATA = <USER_DATA> {};
   process: it.FORM_PROCESS = it.formProcess;
   urlPhoto = 'assets/img/anonymous.gif';
 
   constructor(
     private navCtrl: NavController,
     private navParams: NavParams,
-    private core: Core,
+    public core: Core,
     private member: Member,
     private xbase: Xbase
   ) {
@@ -32,8 +32,15 @@ export class RegisterPage {
 
     this.checkLogin();
 
+    console.log('this.form: ', this.form);
   }
 
+  ionViewDidLoad() {
+    console.log('RegisterPage::ionViewDidLoad()');
+  }
+  ionViewWillEnter() {
+    // this.form = userData;
+  }
   checkLogin() {
     this.member.logged( x => {
       this.login = x;
@@ -48,7 +55,7 @@ export class RegisterPage {
       this.form.email = re.user_email;
       this.form.mobile = re.user_mobile;
       this.form.gender = re.user_gender;
-      this.form.birthday = re.birth_year + '-' + re.birth_month + '-' + re.birth_day;
+      this.form.birthday = re.user_birth_year + '-' + re.user_birth_month + '-' + re.user_birth_day;
     },
     e => {
       alert("error: " + e);
@@ -116,19 +123,17 @@ export class RegisterPage {
 
 
 
-  ionViewDidLoad() {
-    console.log('RegisterPage::ionViewDidLoad()');
-  }
 
   /**
    * Register into xbase
    * @Attention this method is invoked right after philgo register, once philgo register success, then there should be no error registering in xbase.
+   * @see README.md
    */
   registerXbase( successCallback, failureCallback ) {
     let registerData = {
       id: this.form.id,
       password: '~philgo.com@' + this.form.id,
-      email: this.form.email
+      email: this.form.id + '@philgo.com'
     };
     console.log("registerXbase: registerData: ", registerData);
     this.xbase.user_register( registerData, session_id => {
