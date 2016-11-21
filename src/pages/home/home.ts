@@ -23,12 +23,12 @@ export class HomePage {
   constructor(
     private navCtrl: NavController,
     private member: Member,
-    private xbase: Xbase ) {
+    private xbase: Xbase
+    ) {
     console.log('HomePage::constructor()');
 
     // No more page move here.
     // Use DeepLinker
-
 
   }
   ionViewWillEnter() {

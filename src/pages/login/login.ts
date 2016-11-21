@@ -88,6 +88,7 @@ export class LoginPage {
     this.auth.login('twitter', { remember: true })
       .then( re => {
         console.log(re);
+        console.log("user: ", this.user.details );
       })
       .catch( e => {
         console.log(e);
