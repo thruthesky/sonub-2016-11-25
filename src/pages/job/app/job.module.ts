@@ -3,6 +3,12 @@ import { IonicModule } from 'ionic-angular';
 import { JobHomePage } from '../pages/home/job-home';
 import { JobPostPage } from '../pages/post/job-post';
 
+export let LINKS = [
+        { component: JobHomePage, name: 'JobHomePage', segment: 'job' },
+        { component: JobPostPage, name: 'JobPostPage', segment: 'job/post' }
+];
+
+
 
 @NgModule({
   declarations: [

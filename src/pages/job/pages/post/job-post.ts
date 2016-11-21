@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { AlertController, NavController, NavParams, Platform, Events } from 'ionic-angular';
 import { Xbase } from '../../../../xbase-api/xbase';
 import { Camera } from 'ionic-native';
+import { FirebaseStorage } from '../../../../firebase-api/firebase-storage';
+
 
 export interface  PostEdit {
     category_1: string;
@@ -21,7 +23,7 @@ export interface  PostEdit {
     country: string;
     extra_2: string; // year of experience
     gender: 'M' | 'F' | '';
-    attachment_1?: Array<string>;
+    attachment_1?: string;
     attachment_2?: string;
     attachment_3?: string;
 }
@@ -83,8 +85,8 @@ export class JobPostPage {
                 private events: Events,
                 private alertCtrl: AlertController,
                 private platform: Platform,
-                private xbase: Xbase
-                //private file: Data
+                private xbase: Xbase,
+                private firebaseStorage: FirebaseStorage
     ) {
 
         if ( platform.is('cordova') ) this.cordova = true;
@@ -118,27 +120,38 @@ export class JobPostPage {
     }
 
     onFileUploaded( url, ref ) {
-        this.file_progress = false;
-        //this.urlPhoto = url;
-        //this.data.urlPhoto = url;
-        //this.data.refPhoto = ref;
+        console.log("onFileUploaded() : this : ", this);
+        //this.file_progress = false;
+        this.urlPhoto = url;
+        console.log('this.urlPhoto: ', this.urlPhoto);
+        let attachment = {
+            url: url,
+            ref: ref
+        };
+        this.data.attachment_1 = JSON.stringify( attachment );
+
+        /*
+       this.data.urlPhoto = url;
+        this.data.refPhoto = ref;
+        */
     }
 
     onChangeFile(event) {
-        /* let file = event.target.files[0];
-         if ( file === void 0 ) return;
-         this.file_progress = true;
-         let ref = 'user-primary-photo/' + Date.now() + '/' + file.name;
-         this.file.upload( { file: file, ref: ref }, uploaded => {
-         this.onFileUploaded( uploaded.url, uploaded.ref );
-         },
-         e => {
-         this.file_progress = false;
-         alert(e);
-         },
-         percent => {
-         this.position = percent;
-         } ); */
+        let file = event.target.files[0];
+        if ( file === void 0 ) return;
+        console.log('onChangeFile()');
+        let ref = 'job-primary-photo/' + Date.now() + '/' + file.name;
+        this.firebaseStorage.upload( { file: file, ref: ref }, uploaded => {
+            this.onFileUploaded( uploaded.url, uploaded.ref );
+        },
+        e => {
+            this.file_progress = false;
+            alert(e);
+        },
+        percent => {
+            this.position = percent;
+            console.log('percent: ' + this.position);
+        });
     }
 
     onClickDeletePhoto( ref ) {

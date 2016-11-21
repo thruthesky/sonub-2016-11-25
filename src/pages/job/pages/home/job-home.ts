@@ -68,7 +68,6 @@ export class JobHomePage {
     };
     constructor(public navCtrl: NavController ) {
 
-        this.onClickJobPost();
 
         this.search( );
     }

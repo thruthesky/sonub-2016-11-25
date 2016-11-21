@@ -34,7 +34,7 @@ export class Core {
   /**
    * @see README.md#Security
    */
-  getPassword( id ) {
+  getSonubPassword( id ) {
     let random_str = Math.random().toString(36).substr(2, 5);
     return id + '@Sp,.96@' + random_str ;
   }

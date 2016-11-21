@@ -126,7 +126,7 @@ export class LoginPage {
     let data = {
       id: id,
       nickname: id,
-      password: this.core.getSocialPassword( id ),
+      password: this.core.getSonubPassword( id ),
       name: id,
       email: id + '@gmail.com',
       mobile: '01234567890',

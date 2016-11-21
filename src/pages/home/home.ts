@@ -41,7 +41,6 @@ export class HomePage {
   ionViewWillEnter() {
     console.log('HomePage::ionViewWillEnter()')
     this.checkLogin();
-    this.onClickJob();
   }
   checkLogin() {
     this.member.logged( x => {
