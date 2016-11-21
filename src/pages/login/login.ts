@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Platform, NavController } from 'ionic-angular';
-import { Auth, User } from '@ionic/cloud-angular';
+import { Auth , User  } from '@ionic/cloud-angular';
 import { Core } from '../../providers/core';
 import { RegisterPage } from '../register/register';
 import { Member, USER_LOGIN_DATA } from '../../philgo-api/v2/member';
@@ -25,6 +25,7 @@ export class LoginPage {
     public core: Core,
     private member: Member,
     private xbase: Xbase
+
     ) {
 
 
@@ -62,6 +63,41 @@ export class LoginPage {
   onClickFacebookLogin() {
 
     this.auth.login('facebook', { remember: true })
+      .then( re => {
+        console.log(re);
+      })
+      .catch( e => {
+        console.log(e);
+      });
+
+  }
+  onClickGooglePlusLogin() {
+
+    this.auth.login('google', { remember: true })
+      .then( re => {
+        console.log(re);
+      })
+      .catch( e => {
+        console.log(e);
+      });
+
+  }
+
+  onClickTwitterLogin() {
+
+    this.auth.login('twitter', { remember: true })
+      .then( re => {
+        console.log(re);
+      })
+      .catch( e => {
+        console.log(e);
+      });
+
+  }
+
+  onClickInstagramLogin() {
+
+    this.auth.login('instagram', { remember: true })
       .then( re => {
         console.log(re);
       })
