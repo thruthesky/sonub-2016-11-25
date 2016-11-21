@@ -3,7 +3,7 @@ import { IonicApp, IonicModule } from 'ionic-angular';
 import { XbaseApiModule, LINKS as XBASE_API_LINKS } from '../xbase-api/xbase-api-module';
 import { PhilgoApiModule } from '../philgo-api/v2/philgo-api-module';
 import { IonicApiModule } from '../ionic-api/ionic-api-module';
-import { JobModule } from '../pages/job/job-module';
+import { JobModule } from '../pages/job/app/job.module';
 import { ForumModule, LINKS as FORUM_LINKS } from '../pages/forum/forum-module';
 import { Core } from '../providers/core';
 import { MyApp } from './app.component';

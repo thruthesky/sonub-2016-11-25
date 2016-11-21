@@ -1,25 +1,29 @@
 import { Component } from '@angular/core';
 import { AlertController, NavController, NavParams, Platform, Events } from 'ionic-angular';
-
+import { Xbase } from '../../../../xbase-api/xbase';
 import { Camera } from 'ionic-native';
 
 export interface  PostEdit {
-    key : string;
-    category: string;
-    ID : number;
-    post_title: string;
-    post_content: string;
+    category_1: string;
+    post_id : string;
+    title: string;
+    content: string;
+    email: string;
     password: string;
     first_name: string;
     middle_name: string;
     last_name: string;
     mobile: string;
-    birthday: string;
+    extra_1: string; //birthday
     address: string;
+    city: string;
+    province: string;
+    country: string;
+    extra_2: string; // year of experience
     gender: 'M' | 'F' | '';
-    fid: Array<string>;
-    urlPhoto?: string;
-    refPhoto?: string;
+    attachment_1?: Array<string>;
+    attachment_2?: string;
+    attachment_3?: string;
 }
 
 
@@ -29,8 +33,9 @@ export interface  PostEdit {
 export class JobPostPage {
 
     appTitle: string = "Post Edit";
-    data : PostEdit = <PostEdit> {};
-
+    data : PostEdit = <PostEdit> {
+        post_id: 'test'
+    };
     urlPhoto: string = "assets/img/anonymous.gif";
     loader: boolean = false;
     postKey: string;
@@ -47,10 +52,15 @@ export class JobPostPage {
 
     text = {
         fillInAllInfo: 'Fill in All Information',
+        email: 'Email Address',
         gender: 'Gender',
         selectGender: 'Select Gender',
         mobile: 'Mobile #',
         address: 'Address',
+        city: 'City',
+        province: 'Province',
+        country: 'Country',
+        workExperience: 'Work Experience',
         more: 'More',
         less: 'Less',
         edit: 'Edit',
@@ -62,8 +72,8 @@ export class JobPostPage {
         birthday: 'Birthday',
         male: 'Male',
         female: 'Female',
-        personalTitle: 'personalTitle',
-        personalContent: 'personalContent',
+        personalTitle: 'personal Title',
+        personalContent: 'personal Content',
         connectingToServer: 'Connecting to server...',
         submitPost: 'Submit Post'
     };
@@ -73,6 +83,7 @@ export class JobPostPage {
                 private events: Events,
                 private alertCtrl: AlertController,
                 private platform: Platform,
+                private xbase: Xbase
                 //private file: Data
     ) {
 
@@ -88,9 +99,9 @@ export class JobPostPage {
 
     onClickPost() {
         this.loader = true;
-        /*this.post
-            .sets( this.data )
-            .create( () => {
+        this.xbase.post_write( this.data ,
+            re => {
+                console.log('post write success: re: ' + re);
                 this.loader = false;
                 let alert = this.alertCtrl.create({
                     title: 'SUCCESS',
@@ -99,45 +110,45 @@ export class JobPostPage {
                 });
                 alert.present();
                 this.navCtrl.pop();
-                console.log( 'onclickPost::Success' );
-            }, e => {
+            },
+            e => {
                 this.loader = false;
-                console.log( 'onclickPost::Failed' + e );
-            }); */
+                console.log('post write failed: ' + e );
+            });
     }
 
     onFileUploaded( url, ref ) {
         this.file_progress = false;
-        this.urlPhoto = url;
-        this.data.urlPhoto = url;
-        this.data.refPhoto = ref;
+        //this.urlPhoto = url;
+        //this.data.urlPhoto = url;
+        //this.data.refPhoto = ref;
     }
 
     onChangeFile(event) {
-       /* let file = event.target.files[0];
-        if ( file === void 0 ) return;
-        this.file_progress = true;
-        let ref = 'user-primary-photo/' + Date.now() + '/' + file.name;
-        this.file.upload( { file: file, ref: ref }, uploaded => {
-                this.onFileUploaded( uploaded.url, uploaded.ref );
-            },
-            e => {
-                this.file_progress = false;
-                alert(e);
-            },
-            percent => {
-                this.position = percent;
-            } ); */
+        /* let file = event.target.files[0];
+         if ( file === void 0 ) return;
+         this.file_progress = true;
+         let ref = 'user-primary-photo/' + Date.now() + '/' + file.name;
+         this.file.upload( { file: file, ref: ref }, uploaded => {
+         this.onFileUploaded( uploaded.url, uploaded.ref );
+         },
+         e => {
+         this.file_progress = false;
+         alert(e);
+         },
+         percent => {
+         this.position = percent;
+         } ); */
     }
 
     onClickDeletePhoto( ref ) {
         /* this.file.delete( ref, () => {
-            this.urlPhoto = null;
-            this.data.urlPhoto = null;
-            this.data.refPhoto = null;
-        }, e => {
-            alert("FILE DELETE ERROR: " + e);
-        } ); */
+         this.urlPhoto = null;
+         this.data.urlPhoto = null;
+         this.data.refPhoto = null;
+         }, e => {
+         alert("FILE DELETE ERROR: " + e);
+         } ); */
     }
 
     onClickPhoto() {
@@ -169,35 +180,35 @@ export class JobPostPage {
 
     cameraTakePhoto( type: number ) {
         /* console.log('cameraTakePhoto()');
-        let options = {
-            destinationType: Camera.DestinationType.DATA_URL,
-            sourceType: type,
-            encodingType: Camera.EncodingType.JPEG,
-            quality: 100
-        };
+         let options = {
+         destinationType: Camera.DestinationType.DATA_URL,
+         sourceType: type,
+         encodingType: Camera.EncodingType.JPEG,
+         quality: 100
+         };
 
-        Camera.getPicture(options).then((imageData) => {
-            this.file_progress = true;
-            let ref = 'user-primary-photo/' + Date.now() + '/' + 'primary-photo.jpg';
-            let data : FILE_UPLOAD = {
-                file : {
-                    name: 'primary-photo.jpg',
-                    type: 'image/jpeg'
-                },
-                ref: ref,
-                base64: imageData
-            };
-            this.file.upload( data, uploaded => {
-                    this.onFileUploaded( uploaded.url, uploaded.ref );
-                },
-                e => {
-                    this.file_progress = true;
-                    alert( e );
-                },
-                percent => {
+         Camera.getPicture(options).then((imageData) => {
+         this.file_progress = true;
+         let ref = 'user-primary-photo/' + Date.now() + '/' + 'primary-photo.jpg';
+         let data : FILE_UPLOAD = {
+         file : {
+         name: 'primary-photo.jpg',
+         type: 'image/jpeg'
+         },
+         ref: ref,
+         base64: imageData
+         };
+         this.file.upload( data, uploaded => {
+         this.onFileUploaded( uploaded.url, uploaded.ref );
+         },
+         e => {
+         this.file_progress = true;
+         alert( e );
+         },
+         percent => {
 
-                } );
-        }, (err) => { alert(err); }); */
+         } );
+         }, (err) => { alert(err); }); */
 
     }
 

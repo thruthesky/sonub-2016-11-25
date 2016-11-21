@@ -1,0 +1,62 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+        Job Page
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  
+
+  <button ion-button (click)="onClickJobPost()">Job Post</button>
+
+  <ion-label primary stacked>Work Profession</ion-label>
+  <ion-item>
+    <ion-label floating></ion-label>
+    <ion-select [(ngModel)]="data.profession" placeholder="Select Profession" margin-left>
+      <ion-option value="housemaid" >Housemaid</ion-option>
+      <ion-option value="driver" >Driver</ion-option>
+    </ion-select>
+  </ion-item>
+
+
+  <ion-label primary stacked>{{ text.searchByGender }}</ion-label>
+  <ion-row>
+    <ion-col width-50>
+      <ion-item>
+        <ion-label>{{text.male}}</ion-label>
+        <ion-checkbox [(ngModel)]="data.male" (ionChange)="search($event)"></ion-checkbox>
+      </ion-item>
+    </ion-col>
+    <ion-col width-50>
+      <ion-item>
+        <ion-label>{{text.female}}</ion-label>
+        <ion-checkbox [(ngModel)]="data.female" (ionChange)="search($event)"></ion-checkbox>
+      </ion-item>
+    </ion-col>
+  </ion-row>
+
+  <ion-label primary stacked>{{ text.searchByAge }}</ion-label>
+  <ion-item>
+    <ion-range  dualKnobs="true" min="{{ ageRange.lower }}" max="{{ ageRange.upper }}" step="1" [(ngModel)]="searchByAge" (ionChange)="search()" debounce="500">
+      <ion-label range-left>{{ searchByAge.lower }}</ion-label>
+      <ion-label range-right>{{ searchByAge.upper }}</ion-label>
+    </ion-range>
+  </ion-item>
+
+  <ion-label primary stacked>{{ text.searchByCity }}</ion-label>
+  <ion-searchbar [(ngModel)]="data.city" debounce="500" (ionInput)="search($event)" placeholder="Input City..."></ion-searchbar>
+
+  <ion-label primary stacked>{{ text.searchByProvince }}</ion-label>
+  <ion-searchbar [(ngModel)]="data.province" debounce="500" (ionInput)="search($event)" placeholder="Input Province..."></ion-searchbar>
+
+  <ion-label primary stacked>{{ text.searchByName }}</ion-label>
+  <ion-searchbar [(ngModel)]="data.name" debounce="500" (ionInput)="search($event)" placeholder="Input Name..."></ion-searchbar>
+
+
+  <div *ngIf="searching" class="spinner-container">
+    <ion-spinner></ion-spinner>
+  </div>
+
+</ion-content>

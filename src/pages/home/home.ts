@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 
 import { Platform, NavController } from 'ionic-angular';
 import { LoginPage } from '../login/login';
-import { JobIndexPage } from '../job/index/job-index';
+import { JobHomePage } from '../job/pages/home/job-home';
 import { ForumPage } from '../forum/forum';
 import { RegisterPage } from '../register/register';
 
@@ -41,6 +41,7 @@ export class HomePage {
   ionViewWillEnter() {
     console.log('HomePage::ionViewWillEnter()')
     this.checkLogin();
+    this.onClickJob();
   }
   checkLogin() {
     this.member.logged( x => {
@@ -61,7 +62,7 @@ export class HomePage {
     this.onClickRegister();
   }
   onClickJob() {
-    this.navCtrl.push( JobIndexPage );
+    this.navCtrl.push( JobHomePage );
   }
   onClickForum() {
     this.navCtrl.push( ForumPage );
