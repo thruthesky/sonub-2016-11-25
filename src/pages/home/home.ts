@@ -9,7 +9,7 @@ import { RegisterPage } from '../register/register';
 import { Xbase } from '../../xbase-api/xbase';
 
 import { Member,
-         USER_DATA,
+//         USER_DATA,
          USER_LOGIN_DATA } from '../../philgo-api/v2/member';
 
 

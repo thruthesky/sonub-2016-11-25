@@ -56,6 +56,7 @@ export class RegisterPage {
       this.form.mobile = re.user_mobile;
       this.form.gender = re.user_gender;
       this.form.birthday = re.user_birth_year + '-' + re.user_birth_month + '-' + re.user_birth_day;
+      this.form.varchar_1 = re.user_varchar_1;
     },
     e => {
       alert("error: " + e);
