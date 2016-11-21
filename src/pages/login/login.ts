@@ -1,10 +1,6 @@
 import { Component } from '@angular/core';
 import { Platform, NavController } from 'ionic-angular';
-<<<<<<< HEAD
 import { Auth , User  } from '@ionic/cloud-angular';
-=======
-import { Auth, User } from '@ionic/cloud-angular';
->>>>>>> 33b4676e86b3e28ddc1b8c8e9337f5995512441e
 import { Core } from '../../providers/core';
 import { RegisterPage } from '../register/register';
 import { Member, USER_LOGIN_DATA } from '../../philgo-api/v2/member';
@@ -26,13 +22,10 @@ export class LoginPage {
     private navCtrl: NavController,
     private auth: Auth,
     private user: User,
-<<<<<<< HEAD
-    public core: Core
-=======
     public core: Core,
     private member: Member,
     private xbase: Xbase
->>>>>>> 33b4676e86b3e28ddc1b8c8e9337f5995512441e
+
     ) {
 
 
