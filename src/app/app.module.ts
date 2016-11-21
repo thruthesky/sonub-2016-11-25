@@ -10,7 +10,7 @@ import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { LoginPage } from '../pages/login/login';
 import { RegisterPage } from '../pages/register/register';
-import { ForumPage } from '../pages/forum/forum';
+//import { ForumPage } from '../pages/forum/forum';
 
 let links: Array<{ component: any; name: any; segment: any }> = [
   { component: HomePage, name: 'Home', segment: 'home' },

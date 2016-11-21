@@ -9,7 +9,7 @@ import { RegisterPage } from '../register/register';
 import { Xbase } from '../../xbase-api/xbase';
 
 import { Member,
-         USER_DATA,
+//         USER_DATA,
          USER_LOGIN_DATA } from '../../philgo-api/v2/member';
 
 
@@ -23,12 +23,12 @@ export class HomePage {
   constructor(
     private navCtrl: NavController,
     private member: Member,
-    private xbase: Xbase ) {
+    private xbase: Xbase
+    ) {
     console.log('HomePage::constructor()');
 
     // No more page move here.
     // Use DeepLinker
-
 
   }
   ionViewWillEnter() {
