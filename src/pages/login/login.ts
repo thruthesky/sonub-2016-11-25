@@ -61,14 +61,7 @@ export class LoginPage {
   
   xbaseLogin( successCallback ) {
     let data = {id: this.form.id, password: '~philgo.com@' + this.form.id};
-<<<<<<< HEAD
-    // this.xbase.user_login( data, session_id => {
-    //   console.log("xbaseLogin() : success : session_id: " + session_id )
-    //   successCallback();
-    // }, e => {
-    //   console.error('error login xbase: ' + e);
-    // });
-=======
+
     this.xbase.user_login( data, session_id => {
       console.log("xbaseLogin() : success : session_id: " + session_id )
       successCallback();
@@ -76,7 +69,7 @@ export class LoginPage {
       console.error('error login xbase: ' + e);
       this.process = { 'error' : 'Xbase Login Error : ' + e };
     });
->>>>>>> e084d72035e79eb2c1aaf7a2401eb60cf7a896cf
+
   }
 
   onClickCustomLogin() {

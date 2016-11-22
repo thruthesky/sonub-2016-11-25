@@ -93,7 +93,7 @@ export class RegisterPage {
     });
   }
 
-<<<<<<< HEAD
+
 
   onClickRegisterXbase(){
      this.registerXbase( () => {
@@ -104,7 +104,7 @@ export class RegisterPage {
       });
   }
 
-=======
+
   birthday( year, month, day ) : string {
     let m = parseInt( month );
     let d = parseInt( day );
@@ -113,7 +113,7 @@ export class RegisterPage {
   }
 
 
->>>>>>> e084d72035e79eb2c1aaf7a2401eb60cf7a896cf
+
   onClickRegister() {
     console.log('onClickRegister():', this.form);
     this.process  = { 'loader': true };
