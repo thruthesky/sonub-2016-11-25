@@ -6,7 +6,7 @@ import { Core } from '../../providers/core';
 import { LoginPage } from '../login/login';
 import { JobHomePage } from '../job/pages/home/job-home';
 import { ForumIndexPage } from '../forum/pages/index/forum-index';
-import { PostListPage } from '../forum/pages/post-list/post-list';
+//import { PostListPage } from '../forum/pages/post-list/post-list';
 import { RegisterPage } from '../register/register';
 
 import { Xbase } from '../../xbase-api/xbase';

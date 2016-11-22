@@ -16,9 +16,7 @@ import { languageText as lt } from '../etc/language-text';
 @Injectable()
 export class Language {
 
-
-
-  transform(value, args) {
+  transform(value, args?) {
     let ln = Config.language;
     let str = value;
     if ( lt[value] !== void 0 && lt[value][ln] !== void 0 && lt[value][ln] ) str = lt[value][ln];

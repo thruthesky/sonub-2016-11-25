@@ -1,0 +1,29 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+        {{ 'forum.' + post_id | ln }}
+        {{ 'forum' | ln }}
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+
+
+    <ion-list>
+
+        <ion-item *ngFor=" let post of posts.posts ">
+            {{ post.subject }}
+
+            <div class="comments" *ngIf=" post.comments ">
+                <div class="comment" *ngFor=" let comment of post.comments ">
+                    {{ comment.content }}
+                </div>
+            </div>
+        </ion-item>
+
+    </ion-list>
+
+
+
+</ion-content>
