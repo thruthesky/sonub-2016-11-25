@@ -16,7 +16,10 @@ export interface  PostEdit {
     middle_name: string;
     last_name: string;
     mobile: string;
-    extra_1: string; //birthday
+    birthday: string;
+    birth_year?: number;
+    birth_month?: number;
+    birth_day?: number;
     address: string;
     city: string;
     province: string;
@@ -31,6 +34,7 @@ export interface  PostEdit {
 
 
 @Component({
+    selector: 'page-job-post',
     templateUrl: 'job-post.html'
 })
 export class JobPostPage {
@@ -41,7 +45,7 @@ export class JobPostPage {
     };
     urlPhoto: string = "assets/img/anonymous.gif";
     loader: boolean = false;
-    postKey: string;
+    idx: number;
     photoId: number = 0;
 
     result = null;
@@ -94,10 +98,10 @@ export class JobPostPage {
 
         if ( platform.is('cordova') ) this.cordova = true;
 
-        this.postKey = navParams.get('postKey');
-        console.info('navParams:: ' , this.postKey);
+        this.idx = navParams.get('idx');
+        console.info('navParams:: ' , this.idx);
 
-        if ( this.postKey ) {
+        if ( this.idx ) {
             //retrieve the data and display on their respective field
         }
     }
@@ -117,6 +121,14 @@ export class JobPostPage {
 
     onClickPost() {
         this.loader = true;
+
+        if(this.data['birthday']) {
+            let str = this.data['birthday'].split('-');
+            this.data['birth_year'] = parseInt(str[0]);
+            this.data['birth_month'] = parseInt(str[1]);
+            this.data['birth_day'] = parseInt(str[2]);
+        }
+
         this.xbase.post_write( this.data ,
             re => {
                 console.log('post write success: re: ' + re);
