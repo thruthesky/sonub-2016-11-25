@@ -94,10 +94,23 @@ export class RegisterPage {
     });
   }
 
+
+
+  onClickRegisterXbase(){
+     this.registerXbase( () => {
+        alert("Registration Success!");
+      },
+      e => {
+        alert("Error: " + e);
+      });
+  }
+
+
   birthday( year, month, day ) : string {
     let bd = year + '-' + _.padStart(month, 2, '0') + '-' + _.padStart(day, 2, '0');
     return <string> bd;
   }
+
 
 
   onClickRegister() {
