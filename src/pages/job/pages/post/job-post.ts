@@ -52,7 +52,8 @@ export class JobPostPage {
 
     appTitle: string = "Post Edit";
     data : PostEdit = <PostEdit> {
-        post_id: 'test'
+        post_id: 'test',
+        title: 'helper'
     };
     urlPhoto: string = urlPrimaryPhoto;
     loader: boolean = false;
@@ -125,21 +126,28 @@ export class JobPostPage {
                     this.data.idx = re.idx;
                     this.data.category_1 = re.category_1;
                     this.data.post_id = re.post_id
-                    this.data.title = re.title;
                     this.data.content= re.content;
-                    this.data.email = re.email;
                     this.data.first_name = re.first_name;
                     this.data.middle_name = re.middle_name;
                     this.data.last_name = re.last_name;
                     this.data.mobile = re.mobile;
-                    this.data.birthday = re.birth_year +'-'+re.birth_month+'-'+re.birth_day;
+
+                    let mm: string | number = re.birth_month;
+                    let dd: string | number = re.birth_day;
+                    if(dd<10){
+                        dd='0'+dd
+                    }
+                    if(mm<10){
+                        mm='0'+mm
+                    }
+
+                    this.data.birthday = re.birth_year +'-'+mm+'-'+dd;
                     this.data.birth_year = re.birth_year;
                     this.data.birth_month = re.birth_month;
-                    this.data.birth_day = re.birthday;
+                    this.data.birth_day = re.birth_day;
                     this.data.address = re.address;
                     this.data.city = re.city;
                     this.data.province = re.province;
-                    this.data.country = re.country;
                     this.data.extra_2 = re.extra_2; // year of experience
                     this.data.gender = re.gender;
                     this.data.attachment_1 = re.attachment_1;
@@ -147,6 +155,7 @@ export class JobPostPage {
                         let primary = JSON.parse(this.data.attachment_1);
                         this.urlPhoto = primary.url;
                     }
+                    console.log('this.data::', this.data);
                 }
                 else {
                     console.log('ID doesnt exist')
@@ -173,7 +182,7 @@ export class JobPostPage {
 
     onClickPost() {
         this.loader = true;
-
+        console.log(this.data['birthday']);
         if(this.data['birthday']) {
             let str = this.data['birthday'].split('-');
             this.data['birth_year'] = parseInt(str[0]);
