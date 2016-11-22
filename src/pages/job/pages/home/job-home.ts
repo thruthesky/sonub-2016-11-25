@@ -97,25 +97,13 @@ export class JobHomePage {
         let cond = '';
         let today = new Date();
         let yy = today.getFullYear();
-        let mm: string | number = today.getMonth()+1;
-        let dd: string | number = today.getDate();
-        //let maxAge = yy-this.searchByAge.lower+'-'+mm+'-'+dd;
-        //let minAge = yy-this.searchByAge.upper+'-'+mm+'-'+dd;
-
         let maxAge = yy-this.searchByAge.lower + 1;
         let minAge = yy-this.searchByAge.upper;
 
-
-        if(dd<10){
-            dd='0'+dd
-        }
-        if(mm<10){
-            mm='0'+mm
-        }
-
-        cond += "category_1 = '"+ this.data.category_1 +"'";
-        cond += " AND birth_year >= '"+minAge+"'";
+        cond = "birth_year >= '"+minAge+"'";
         cond += " AND birth_year <= '"+maxAge+"'";
+
+        if( this.data.category_1 != 'all') cond += " AND category_1 = '"+ this.data.category_1 +"'";
 
         if((this.data.male) && ( ! this.data.female)) {
             cond += " AND gender = 'M'";
