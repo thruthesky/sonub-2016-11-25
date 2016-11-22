@@ -3,12 +3,6 @@ import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 import { Platform } from 'ionic-angular';
 
-/*
-  Generated class for the Core provider.
-
-  See https://angular.io/docs/ts/latest/guide/dependency-injection.html
-  for more info on providers and Angular 2 DI.
-*/
 @Injectable()
 export class Core {
 
@@ -19,10 +13,14 @@ export class Core {
     public platform: Platform,
   ) {
     console.log('Core::constructor()');
+    this.checkCordova();
+  }
+
+  checkCordova() {
     console.log('platform: ', this.platform.platforms());
-    platform.ready().then( () => {
+    this.platform.ready().then( () => {
       console.log('Core::constructor() : platform ready !');
-      if ( this.platform.is('cordova') || this.platform.is('android') || this.platform.is('ios') ) {
+      if ( this.platform.is('cordova') ) {
         console.log('Core::constructor() : platform ready >> is cordova !');
         this.isCordova = true;
         this.isWeb = false;

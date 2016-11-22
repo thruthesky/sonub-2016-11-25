@@ -1,10 +1,12 @@
 import { Component } from '@angular/core';
 
 import { Platform, NavController } from 'ionic-angular';
+import { Language } from '../../pipes/language';
 import { Core } from '../../providers/core';
 import { LoginPage } from '../login/login';
 import { JobHomePage } from '../job/pages/home/job-home';
-import { ForumPage } from '../forum/forum';
+import { ForumIndexPage } from '../forum/pages/index/forum-index';
+import { PostListPage } from '../forum/pages/post-list/post-list';
 import { RegisterPage } from '../register/register';
 
 import { Xbase } from '../../xbase-api/xbase';
@@ -27,7 +29,8 @@ export class HomePage {
     private navCtrl: NavController,
     private core: Core,
     private member: Member,
-    private xbase: Xbase
+    private xbase: Xbase,
+    private language: Language
     ) {
     console.log('HomePage::constructor()');
 
@@ -40,6 +43,7 @@ export class HomePage {
     });
 
 
+//    this.output['language'] = this.language.transform("Hello, World!", null);
     this.output['password'] = core.getRandomString('n');
 
   }
@@ -69,7 +73,7 @@ export class HomePage {
     this.navCtrl.push( JobHomePage );
   }
   onClickForum() {
-    this.navCtrl.push( ForumPage );
+    this.navCtrl.push( ForumIndexPage );
   }
   onClickLogin() {
     this.navCtrl.push( LoginPage );

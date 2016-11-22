@@ -1,0 +1,44 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      {{ 'forum' | ln }}
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  
+
+  <ion-list>
+    <ion-item>
+      <h3>{{ 'forum.community' | ln }}</h3>
+      <div *ngFor=" let post_id of community">{{ post_id }}</div>
+    </ion-item>
+    <ion-item>
+      {{ 'forum.buyandsell' | ln }}
+      <div *ngFor=" let post_id of buyandsell">{{ post_id }}</div>
+    </ion-item>
+    <ion-item>
+      {{ 'forum.life' | ln }}
+      <div *ngFor=" let post_id of life">{{ post_id }}</div>
+    </ion-item>
+    <ion-item>
+      {{ 'forum.travel' | ln }}
+      <div *ngFor=" let post_id of travel">{{ post_id }}</div>
+    </ion-item>
+    <ion-item>
+      {{ 'forum.love' | ln }}
+      <div *ngFor=" let post_id of love">{{ post_id }}</div>
+    </ion-item>
+    <ion-item>
+      {{ 'forum.news' | ln }}
+      <div *ngFor=" let post_id of news">{{ post_id }}</div>
+    </ion-item>
+    <ion-item>
+      {{ 'forum.info' | ln }}
+      <div *ngFor=" let post_id of info">{{ post_id }}</div>
+    </ion-item>
+  </ion-list>
+
+
+</ion-content>
