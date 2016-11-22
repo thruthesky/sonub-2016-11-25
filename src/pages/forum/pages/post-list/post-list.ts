@@ -1,14 +1,14 @@
 import { Component } from '@angular/core';
 import { NavParams } from 'ionic-angular';
 @Component({
-    templateUrl: 'forum.html'
+    templateUrl: 'post-list.html'
 })
-export class ForumPage {
+export class PostListPage {
 
     constructor(
         private navParams: NavParams
     ) {
-        console.log("RegisterPage::constructor() : navParams: ", this.navParams.data) ;
+        console.log("PostListPage::constructor() : navParams: ", this.navParams.data) ;
     }
 
 }
