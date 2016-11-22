@@ -56,6 +56,7 @@ Social Netowrk Hub
 
 * git submodule update --init
 * git submodule foreach git checkout master
+* ionic plugin add cordova-plugin-device --save
 * npm install @ionic/cloud-angular --save
 * App ID and settings are already done in the code. @see http://docs.ionic.io/setup.html#app-id
 * cordova plugin add cordova-plugin-inappbrowser --save
@@ -78,7 +79,8 @@ Social Netowrk Hub
 
 * When a user logs in through Social,
 
-    * A random password will be generated to register PhilGo and Xbase.
-    * The password must be not gussable.
-    * The login session information should be saved in storage.
-        * if storage cleared or logged out, the user must re-register.
+    * A random password will be generated and that password will be used every where.
+    * So, that password must be saved in a secret place.
+        * That's the ionic cloud Auth User Data.
+    * To register PhilGo and Xbase, use the password.
+    * To login, use the password.

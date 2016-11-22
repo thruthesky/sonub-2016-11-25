@@ -13,6 +13,9 @@
   <h1>Sonub Homepage ... 2</h1>
 
 
+output:
+{{ output |json }}
+
   <section *ngIf=" login ">
       <button ion-button (click)="onClickLogout()">LOGOUT</button>
       <button ion-button (click)="onClickProfileUpdate()">PROFILE UPDATE</button>

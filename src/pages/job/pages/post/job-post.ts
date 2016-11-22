@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, NgZone } from '@angular/core';
 import { AlertController, NavController, NavParams, Platform, Events } from 'ionic-angular';
 import { Xbase } from '../../../../xbase-api/xbase';
 import { Camera } from 'ionic-native';
@@ -46,7 +46,8 @@ export class JobPostPage {
     result = null;
     progress = null;
     error = null;
-    file_progress = null;
+
+    file_progress:boolean = false;
     position = 0;
 
     cordova: boolean = false;
@@ -86,7 +87,8 @@ export class JobPostPage {
                 private alertCtrl: AlertController,
                 private platform: Platform,
                 private xbase: Xbase,
-                private firebaseStorage: FirebaseStorage
+                private firebaseStorage: FirebaseStorage,
+                private ngZone: NgZone
     ) {
 
         if ( platform.is('cordova') ) this.cordova = true;
@@ -97,6 +99,19 @@ export class JobPostPage {
         if ( this.postKey ) {
             //retrieve the data and display on their respective field
         }
+    }
+    /**
+     * Re-Renders Page.
+     * @note From JaeHo Song. It is considered a bug that it really does not bind properly. when the value changes, it does not reflect on page.
+     * 
+     * @warning this method must be removed after the bug has been fixed from the Angular or Ionic
+     * 
+     * 
+     */
+    renderPage() {
+        this.ngZone.run(() => {
+            console.log('ngZone.run()');
+        });
     }
 
     onClickPost() {
@@ -121,25 +136,24 @@ export class JobPostPage {
 
     onFileUploaded( url, ref ) {
         console.log("onFileUploaded() : this : ", this);
-        //this.file_progress = false;
+        this.file_progress = false;
         this.urlPhoto = url;
+        this.renderPage();
         console.log('this.urlPhoto: ', this.urlPhoto);
         let attachment = {
             url: url,
             ref: ref
         };
         this.data.attachment_1 = JSON.stringify( attachment );
-
-        /*
-       this.data.urlPhoto = url;
-        this.data.refPhoto = ref;
-        */
     }
 
     onChangeFile(event) {
         let file = event.target.files[0];
         if ( file === void 0 ) return;
-        console.log('onChangeFile()');
+        console.log('onChangeFile(): file: ', file);
+        this.file_progress = true;
+        //this.position = 50;
+        //this.urlPhoto = file.name;
         let ref = 'job-primary-photo/' + Date.now() + '/' + file.name;
         this.firebaseStorage.upload( { file: file, ref: ref }, uploaded => {
             this.onFileUploaded( uploaded.url, uploaded.ref );
@@ -151,6 +165,7 @@ export class JobPostPage {
         percent => {
             this.position = percent;
             console.log('percent: ' + this.position);
+            this.renderPage();
         });
     }
 

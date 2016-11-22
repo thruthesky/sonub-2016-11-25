@@ -95,6 +95,7 @@ export class LoginPage {
         let details: any = this.user.details;
         let twitter_id: string = details.twitter_id;
         let id = twitter_id + '@twitter.com';
+        this.user.set('password', this.core.getRandomString( id ) );
         this.registerPhilgo( id, re => this.registerXbase(id, session_id =>{
           console.log('register success: session_id: ', session_id);
         }) );
@@ -122,24 +123,35 @@ export class LoginPage {
     this.navCtrl.push( RegisterPage );
   }
 
+  /**
+   * Register philgo.com
+   */
   registerPhilgo( id, callback ) {
+    let password = this.user.get('password', '');
     let data = {
       id: id,
       nickname: id,
-      password: this.core.getSonubPassword( id ),
+      password: password,
       name: id,
       email: id + '@gmail.com',
       mobile: '01234567890',
       gender: 'M'
     };
-    this.member.register( data , callback, e => console.log(e) );
+    console.log('registerPhilgo() data: ', data);
+    this.member.register( data , () => {
+      console.log('registerPhilgo() : success');
+      callback();
+    }, e => console.log('registerPhilgo() failed: ', e) );
   }
+  /**
+   * 
+   */
   registerXbase( id, callback ) {
-
+    let password = this.user.get('password', '');
     let registerData = {
       id: id,
-      password: '~philgo.com@' + this.form.id,
-      email: this.form.id + '@philgo.com'
+      password: password,
+      email: id + '@philgo.com'
     };
     console.log("registerXbase: registerData: ", registerData);
     this.xbase.user_register( registerData, session_id => {

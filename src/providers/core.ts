@@ -32,10 +32,13 @@ export class Core {
 
 
   /**
+   * Returns random string.
    * @see README.md#Security
+   * @note This generates random string.
+   * 
    */
-  getSonubPassword( id ) {
-    let random_str = Math.random().toString(36).substr(2, 5);
+  getRandomString( id ) {
+    let random_str = Math.random().toString(36).substr(2, 8);
     return id + '@Sp,.96@' + random_str ;
   }
 
