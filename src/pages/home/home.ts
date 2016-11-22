@@ -35,7 +35,7 @@ export class HomePage {
     // Use DeepLinker
     this.platform.ready().then( () => {
       console.log('platform ready():');
-      if ( this.platform.is('mobile') ) console.log("Cordova");
+      if ( this.platform.is('cordova') ) console.log("Cordova");
       else console.log("NOT Cordova");
     });
 

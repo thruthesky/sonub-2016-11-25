@@ -54,6 +54,8 @@ Social Netowrk Hub
 
 # INSTALL
 
+* rmdir /s node_modules
+* npm install --verbose
 * git submodule update --init
 * git submodule foreach git checkout master
 * ionic plugin add cordova-plugin-device --save
