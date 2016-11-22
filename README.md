@@ -1,17 +1,22 @@
+
 # SONUB
+
 
 Social Netowrk Hub
 
 # TODO
 
-    - [ ] Social login & Register/log in philgo and xbase 
     - [ ] If user has not photo, Photo Upload on User Profile. Social login users may have picture.
     - [ ] Post CRUD & Comment CRUD on PhilGo.com
     - [ ] Post CRUD & Comment CRUD on Xbase
     - [ ] Search on Xbase
     - [ ] Search on Philgo of google.
+    - [ ] Social login & Register/log in philgo and xbase 
+        - @comment : to work on this part, livereload should work on GenyMotion. as of ionic cli 2.1.12 & app-scripts 0.0.46, when running in genymotion, cordova is working but when running with livereload, cordova is not found.
+
     - [ ] @later Need to improve Xbase login password for security.
     - [ ] @later Philgo Logout and Xbase auto logout. At this time, when a user logs out in philgo, the user does not log out in xbase.
+
     - [x] @done *Philgo Login and Xbase Auto Login.*
     - [x] @done *Philgo Registration and Xbase auto Registration
 
@@ -49,69 +54,35 @@ Social Netowrk Hub
 
 # INSTALL
 
+* rmdir /s node_modules
+* npm install --verbose
 * git submodule update --init
 * git submodule foreach git checkout master
+* ionic plugin add cordova-plugin-device --save
 * npm install @ionic/cloud-angular --save
 * App ID and settings are already done in the code. @see http://docs.ionic.io/setup.html#app-id
 * cordova plugin add cordova-plugin-inappbrowser --save
+* npm install firebase --save
 
 
 
 # User Registration
 
-* Sonub is an app of combination of philgo.com, xbase, ionic, fireframe.
+* @see [User Registration Doc](https://github.com/thruthesky/sonub/tree/master/src/pages/register)
 
-* User must save his profile data into philgo.com and xbase.
+# User Login
 
-* User can login through philgo.com and social like facebook.com.
-
-    * If a user logs in through social,
-
-        * then the user must save his profile data into philgo.com and xabase.
-
-
-* PhilGo.COM is the base for user register, login, profile data saving.
-
-    * If a user has successfully registered in PhilGo.COM,
-        the app must save the user's registration data in xbase without error.
-
-
-* When a user logged in through philgo.com
-    * the user must login into xbase also.
-    * if the user has no account in xbase, then create one.
-
-* When a user logged in through social site,
-    * the app must create account and login in Philgo.com and Xbase without error.
-
-
-* ID format of philgo.com & xbase for social login
-
-    id@facebook.com
-    id@google+.com
-    id@twitter.com
+* @see [User Login Doc](https://github.com/thruthesky/sonub/tree/master/src/pages/login)
 
 
 
-* For instance, sonub app.
 
-    * if a user registers, the user data must save in PhilGo.COM
+# Security
 
-    * if user registered in philgo.com successfully,
+* When a user logs in through Social,
 
-        then the app must create id in xbase without error.
-
-        * for instance, if user id conflicts,
-
-            then create something like
-                "user_id@philgo.com-2", "user_id@philgo.com-3" and so on.
-     
-     * xbase password is the combination of philgo member_idx and user_id
-
-        ex) user_id/member_idx@philgo.com
-
-
-
-## User Registration PhilGo and Xbase
-
-  * Xbase user ID is "philgo_user_id@philgo.com"
-  * Xbase user Password is "~philgo.com@philgo_user_id"
+    * A random password will be generated and that password will be used every where.
+    * So, that password must be saved in a secret place.
+        * That's the ionic cloud Auth User Data.
+    * To register PhilGo and Xbase, use the password.
+    * To login, use the password.

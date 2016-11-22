@@ -1,16 +1,17 @@
 import { NgModule } from '@angular/core';
 import { IonicApp, IonicModule } from 'ionic-angular';
+import { FirebaseApiModule } from '../firebase-api/firebase-api-module';
 import { XbaseApiModule, LINKS as XBASE_API_LINKS } from '../xbase-api/xbase-api-module';
 import { PhilgoApiModule } from '../philgo-api/v2/philgo-api-module';
 import { IonicApiModule } from '../ionic-api/ionic-api-module';
-import { JobModule } from '../pages/job/job-module';
+import { JobModule, LINKS as JOB_LINKS } from '../pages/job/app/job.module';
 import { ForumModule, LINKS as FORUM_LINKS } from '../pages/forum/forum-module';
 import { Core } from '../providers/core';
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { LoginPage } from '../pages/login/login';
 import { RegisterPage } from '../pages/register/register';
-import { ForumPage } from '../pages/forum/forum';
+//import { ForumPage } from '../pages/forum/forum';
 
 let links: Array<{ component: any; name: any; segment: any }> = [
   { component: HomePage, name: 'Home', segment: 'home' },
@@ -19,6 +20,7 @@ let links: Array<{ component: any; name: any; segment: any }> = [
 ];
 FORUM_LINKS.map( e => links.push( e ) );
 XBASE_API_LINKS.map( e => links.push(e) );
+JOB_LINKS.map( e => links.push(e) );
 
 
 @NgModule({
@@ -32,6 +34,7 @@ XBASE_API_LINKS.map( e => links.push(e) );
     IonicModule.forRoot(MyApp, {}, {
       links: links
     }),
+    FirebaseApiModule,
     XbaseApiModule,
     PhilgoApiModule,
     IonicApiModule,

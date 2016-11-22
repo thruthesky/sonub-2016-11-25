@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, NgZone } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { Member,
          USER_DATA,
@@ -6,8 +6,11 @@ import { Member,
 import * as it from '../../providers/interface';
 import { Xbase } from '../../xbase-api/xbase';
 import { Core } from '../../providers/core';
+import { FirebaseStorage } from '../../firebase-api/firebase-storage';
 
 import { HomePage } from '../home/home';
+
+export const urlPrimaryPhoto = 'assets/img/anonymous.gif';
 
 @Component({
   selector: 'page-register',
@@ -18,13 +21,19 @@ export class RegisterPage {
   login: USER_LOGIN_DATA = <USER_LOGIN_DATA> {};
   form: USER_DATA = <USER_DATA> {};
   process: it.FORM_PROCESS = it.formProcess;
-  urlPhoto = 'assets/img/anonymous.gif';
+  urlPhoto: string = urlPrimaryPhoto;
+
+  file_upload_begin: boolean = false;
+  file_delete_begin: boolean = false;
+  file_upload_position: number = 0;
 
   constructor(
+    private ngZone: NgZone,
     private navCtrl: NavController,
     private navParams: NavParams,
     public core: Core,
     private member: Member,
+    private firebaseStorage: FirebaseStorage,
     private xbase: Xbase
   ) {
 
@@ -33,6 +42,14 @@ export class RegisterPage {
     this.checkLogin();
 
     console.log('this.form: ', this.form);
+  }
+  /**
+   * @attention page re-rendering
+   */
+  renderPage() {
+      this.ngZone.run(() => {
+          console.log('ngZone.run()');
+      });
   }
 
   ionViewDidLoad() {
@@ -55,13 +72,28 @@ export class RegisterPage {
       this.form.email = re.user_email;
       this.form.mobile = re.user_mobile;
       this.form.gender = re.user_gender;
-      this.form.birthday = re.user_birth_year + '-' + re.user_birth_month + '-' + re.user_birth_day;
+
+      this.form.birthday = this.birthday( re.user_birth_year, re.user_birth_month, re.user_day );
+      if ( re.user_text_1 === void 0 || re.user_text_1 == 'null' || ! re.user_text_1 ) this.form.text_1 = null;
+      else {
+        this.form.text_1 = re.user_text_1;
+        try {
+          let data = JSON.parse( this.form.text_1 );
+          this.urlPhoto = data.url;
+        }
+        catch( e ) {
+          console.error('JSON parse failed on load user profile. paring primary photo');
+          console.info('text_1:', this.form.text_1);
+        }
+      }
+      console.log('this.form: ', this.form);
     },
     e => {
       alert("error: " + e);
     });
   }
 
+<<<<<<< HEAD
 
   onClickRegisterXbase(){
      this.registerXbase( () => {
@@ -72,6 +104,16 @@ export class RegisterPage {
       });
   }
 
+=======
+  birthday( year, month, day ) : string {
+    let m = parseInt( month );
+    let d = parseInt( day );
+    let bd = year + m < 10 ? '0' + m : m + d < 10 ? '0' + d : d;
+    return <string> bd;
+  }
+
+
+>>>>>>> e084d72035e79eb2c1aaf7a2401eb60cf7a896cf
   onClickRegister() {
     console.log('onClickRegister():', this.form);
     this.process  = { 'loader': true };
@@ -124,14 +166,70 @@ export class RegisterPage {
 
     }
  
-    onClickDeletePhoto(){
-
+    onClickDeletePhoto( ) {
+      let data = this.form.text_1;
+      if ( ! data ) return;
+      let file;
+      try {
+        file = JSON.parse( data );
+      }
+      catch( e ) {
+        alert("JSON parse failed:");
+        return;
+      }
+      this.file_delete_begin = true;
+      
+      this.firebaseStorage.delete( file.ref, () => {
+        this.file_delete_begin = false;
+        this.urlPhoto = urlPrimaryPhoto;
+        this.form.text_1 = null;
+        this.renderPage();
+      
+      }, e => {
+        this.file_delete_begin = false;
+        alert("FILE DELETE ERROR: " + e);
+        this.renderPage();
+      } );
     }
 
-    onChangeFile($event){
 
+    onFileUploaded( url, ref ) {
+        console.log("onFileUploaded() : this : ", this);
+        this.file_upload_begin = false;
+        this.urlPhoto = url;
+        console.log('this.urlPhoto: ', this.urlPhoto);
+        let file_data = {
+            url: url,
+            ref: ref
+        };
+        this.form.text_1 = JSON.stringify( file_data );
+        console.log('text_1', this.form.text_1 );
+        this.renderPage();
     }
-
+    getReferenceOfPrimaryPhoto( name ) {
+        return 'primary-photo/' + Date.now() + '/' + name;
+    }
+    onChangeFile(event) {
+        let file = event.target.files[0];
+        if ( file === void 0 ) return;
+        console.log('onChangeFile(): file: ', file);
+        this.file_upload_begin = true;
+        //this.position = 50;
+        //this.urlPhoto = file.name;
+        let ref = this.getReferenceOfPrimaryPhoto( file.name );
+        this.firebaseStorage.upload( { file: file, ref: ref }, uploaded => {
+            this.onFileUploaded( uploaded.url, uploaded.ref );
+        },
+        e => {
+            this.file_upload_begin = false;
+            alert(e);
+        },
+        percent => {
+            this.file_upload_position = percent;
+            console.log('percent: ' + this.file_upload_position);
+            this.renderPage();
+        });
+    }
 
 
 

@@ -18,13 +18,35 @@ export class Core {
     private http: Http,
     public platform: Platform,
   ) {
-    console.log('Hello Core Provider');
+    console.log('Core::constructor()');
+    console.log('platform: ', this.platform.platforms());
     platform.ready().then( () => {
-      if ( this.platform.is('cordova') ) {
+      console.log('Core::constructor() : platform ready !');
+      if ( this.platform.is('cordova') || this.platform.is('android') || this.platform.is('ios') ) {
+        console.log('Core::constructor() : platform ready >> is cordova !');
         this.isCordova = true;
         this.isWeb = false;
       }
     });
+  }
+
+
+  /**
+   * Returns random string.
+   * @see README.md#Security
+   * @note This generates random string.
+   * 
+   */
+  getRandomString( id ) {
+    let random_str = Math.random().toString(36).substr(2, 8);
+    return id + '@Sp,.96@' + random_str ;
+  }
+
+  /**
+   * @note
+   */
+  getBackendID( id ) {
+    return id + '@sonub.com';
   }
 
 
