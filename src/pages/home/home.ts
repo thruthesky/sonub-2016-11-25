@@ -51,11 +51,11 @@ export class HomePage {
     this.member.logged( x => {
       console.log("checkLogin::philgo login ok: login info : ", x);
       this.login = x;
-      this.xbase.logged( x => {
-        console.log("checkLogin::xbase login ok: session_id: " + x);
-      }, () => {
-        console.log("checkLogin::xbase NOT login");
-      });
+      // this.xbase.logged( x => {
+      //   console.log("checkLogin::xbase login ok: session_id: " + x);
+      // }, () => {
+      //   console.log("checkLogin::xbase NOT login");
+      // });
     },
     () => this.login = null );
   }
