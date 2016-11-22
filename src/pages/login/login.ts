@@ -60,6 +60,18 @@ export class LoginPage {
     // });
   }
 
+  onClickCustomLogin() {
+
+      this.auth.login('custom', { remember: true })
+        .then( re => {
+          console.log(re);
+        })
+        .catch( e => {
+          console.log(e);
+        });
+
+    }
+
   onClickFacebookLogin() {
 
     this.auth.login('facebook', { remember: true })
