@@ -50,6 +50,7 @@ export class JobHomePage {
         searchByAge: 'Search by Age',
         searchByAddress: 'Search by Address',
         searchByName: 'Search by Name',
+        searchByCity: 'Search by City',
         searching: 'Searching',
         male: 'Male',
         female: 'Female',

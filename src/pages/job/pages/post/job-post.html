@@ -16,7 +16,7 @@
         </div>
         <input *ngIf=" ! cordova " type="file" (change)="onChangeFile($event)">
 
-        <div *ngIf=" data?.urlPhoto ">
+        <div *ngIf=" data?.attachment_1">
             <button ion-button (click)="onClickDeletePhoto( data.refPhoto )">DELETE</button>
         </div>
         
