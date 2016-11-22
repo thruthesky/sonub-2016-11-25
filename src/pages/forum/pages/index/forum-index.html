@@ -12,31 +12,31 @@
   <ion-list>
     <ion-item>
       <h3>{{ 'forum.community' | ln }}</h3>
-      <div *ngFor=" let post_id of community">{{ post_id }}</div>
+      <div *ngFor=" let post_id of community">{{ 'forum.' + post_id | ln }}</div>
     </ion-item>
     <ion-item>
       {{ 'forum.buyandsell' | ln }}
-      <div *ngFor=" let post_id of buyandsell">{{ post_id }}</div>
+      <div *ngFor=" let post_id of buyandsell">{{ 'forum.' + post_id | ln }}</div>
     </ion-item>
     <ion-item>
       {{ 'forum.life' | ln }}
-      <div *ngFor=" let post_id of life">{{ post_id }}</div>
+      <div *ngFor=" let post_id of life">{{ 'forum.' + post_id | ln }}</div>
     </ion-item>
     <ion-item>
       {{ 'forum.travel' | ln }}
-      <div *ngFor=" let post_id of travel">{{ post_id }}</div>
+      <div *ngFor=" let post_id of travel">{{ 'forum.' + post_id | ln }}</div>
     </ion-item>
     <ion-item>
       {{ 'forum.love' | ln }}
-      <div *ngFor=" let post_id of love">{{ post_id }}</div>
+      <div *ngFor=" let post_id of love">{{ 'forum.' + post_id | ln }}</div>
     </ion-item>
     <ion-item>
       {{ 'forum.news' | ln }}
-      <div *ngFor=" let post_id of news">{{ post_id }}</div>
+      <div *ngFor=" let post_id of news">{{ 'forum.' + post_id | ln }}</div>
     </ion-item>
     <ion-item>
       {{ 'forum.info' | ln }}
-      <div *ngFor=" let post_id of info">{{ post_id }}</div>
+      <div *ngFor=" let post_id of info">{{ 'forum.' + post_id | ln }}</div>
     </ion-item>
   </ion-list>
 
