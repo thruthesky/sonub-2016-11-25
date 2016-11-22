@@ -5,7 +5,7 @@ import { Xbase } from '../../../../xbase-api/xbase';
 
 
 export interface SearchData {
-    profession: string;
+    category_1: string;
     name: string;
     city: string;
     province: string;
@@ -36,9 +36,11 @@ export class JobHomePage {
     searching: boolean = false;
     moreButton = [];
     posts = [];
+    date = new Date();
+    fullYear = this.date.getFullYear();
 
     data: SearchData = {
-        profession: 'housemaid',
+        category_1: 'housemaid',
         name: '',
         city: '',
         province: '',
@@ -93,7 +95,6 @@ export class JobHomePage {
 
     search( $event? ) {
         let cond = '';
-        let gender = '';
         let today = new Date();
         let yy = today.getFullYear();
         let mm: string | number = today.getMonth()+1;
@@ -117,16 +118,18 @@ export class JobHomePage {
         else if ((! this.data.male) && (this.data.female)) {
             cond = "gender = 'F' AND ";
         }
-        //if birthday is available YYYY-MM-DD
-        //cond = cond + "birthday BETWEEN '" + minAge + "' AND '" + maxAge +"'";
+        cond += "category_1 = '"+ this.data.category_1 +"' AND ";
+        cond += "birth_year BETWEEN " + minAge + " AND " + maxAge +" AND ";
+        cond += "birth_month <= " + mm + " AND ";
+        cond += "birth_day <= "+ dd;
 
-        cond = cond + "birth_year BETWEEN '" + minAge + "' AND '" + maxAge +"'";
+        cond += " AND city LIKE '%" + this.data.city + "%' ";
+        cond += " AND province LIKE '%" + this.data.province + "%' ";
 
+        cond += " AND first_name LIKE '%" + this.data.name + "%' ";
+        console.log('search condition:: ', cond);
 
-
-
-
-
+        this.posts = [];
         this.showLoader();
         this.xbase.post_search({
             cond: cond
@@ -146,7 +149,14 @@ export class JobHomePage {
 
     displayPosts( data ) {
         console.log( 'success', data );
-        if ( data.count ) this.posts = data.rows;
+        if ( data.count ) {
+            for( let post of data.rows ){
+                if(post.attachment_1) {
+                    post.attachment_1 = JSON.parse(post.attachment_1);
+                }
+                this.posts.push( post);
+            }
+        }
         console.log('displayPosts:: ' , this.posts);
     }
 
