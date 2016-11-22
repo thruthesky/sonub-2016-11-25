@@ -52,7 +52,8 @@ export class JobPostPage {
 
     appTitle: string = "Post Edit";
     data : PostEdit = <PostEdit> {
-        post_id: 'test'
+        post_id: 'test',
+        title: 'helper'
     };
     urlPhoto: string = urlPrimaryPhoto;
     loader: boolean = false;
@@ -125,9 +126,7 @@ export class JobPostPage {
                     this.data.idx = re.idx;
                     this.data.category_1 = re.category_1;
                     this.data.post_id = re.post_id
-                    this.data.title = re.title;
                     this.data.content= re.content;
-                    this.data.email = re.email;
                     this.data.first_name = re.first_name;
                     this.data.middle_name = re.middle_name;
                     this.data.last_name = re.last_name;
@@ -139,7 +138,6 @@ export class JobPostPage {
                     this.data.address = re.address;
                     this.data.city = re.city;
                     this.data.province = re.province;
-                    this.data.country = re.country;
                     this.data.extra_2 = re.extra_2; // year of experience
                     this.data.gender = re.gender;
                     this.data.attachment_1 = re.attachment_1;

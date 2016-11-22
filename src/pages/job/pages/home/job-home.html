@@ -62,10 +62,10 @@
   <ion-list>
     <ion-item-group text-wrap *ngFor=" let post of posts; let i = index;  ">
       <ion-item-divider>
-        <ion-avatar *ngIf="post.attachment_1.url" item-left (click)="moreButton[i] = !moreButton[i]">
-          <img src="{{post?.attachment_1.url}}"/>
+        <ion-avatar *ngIf="post.attachment_1?.url" item-left (click)="moreButton[i] = !moreButton[i]">
+          <img src="{{post.attachment_1?.url}}"/>
         </ion-avatar>
-        <div (click)="moreButton[i] = !moreButton[i]">{{ post.title }}</div>
+        <!--div (click)="moreButton[i] = !moreButton[i]">{{ post.title }}</div-->
         <div (click)="moreButton[i] = !moreButton[i]">{{ post.content }}</div>
         <button ion-button clear small item-right no-padding (click)="moreButton[i] = !moreButton[i]" *ngIf="!moreButton[i]">
           <ion-icon name='arrow-dropdown-circle'></ion-icon>

@@ -112,21 +112,21 @@ export class JobHomePage {
         if(mm<10){
             mm='0'+mm
         }
+
+        cond += "category_1 = '"+ this.data.category_1 +"'";
+        cond += " AND birth_year >= '"+minAge+"'";
+        cond += " AND birth_year <= '"+maxAge+"'";
+
         if((this.data.male) && ( ! this.data.female)) {
-            cond = "gender = 'M' AND ";
+            cond += " AND gender = 'M'";
         }
         else if ((! this.data.male) && (this.data.female)) {
-            cond = "gender = 'F' AND ";
+            cond += " AND gender = 'F'";
         }
-        cond += "category_1 = '"+ this.data.category_1 +"' AND ";
-        cond += "birth_year BETWEEN " + minAge + " AND " + maxAge +" AND ";
-        cond += "birth_month <= " + mm + " AND ";
-        cond += "birth_day <= "+ dd;
 
-        cond += " AND city LIKE '%" + this.data.city + "%' ";
-        cond += " AND province LIKE '%" + this.data.province + "%' ";
-
-        cond += " AND first_name LIKE '%" + this.data.name + "%' ";
+        if(this.data.city ) cond += " AND city LIKE '%" + this.data.city + "%' ";
+        if(this.data.province ) cond += " AND province LIKE '%" + this.data.province + "%' ";
+        if(this.data.name ) cond += " AND first_name LIKE '%" + this.data.name + "%' ";
         console.log('search condition:: ', cond);
 
         this.posts = [];
