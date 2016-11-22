@@ -40,19 +40,13 @@ export class LoginPage {
   onClickLogin() {
     console.log("LoginPage::onClickLogin() form: ", this.form);
     this.process = { 'loader' : true };
-<<<<<<< HEAD
-      this.member.login( this.form, ( login: USER_LOGIN_DATA ) => {
-        // this.xbaseLogin( () => {
-        //   alert('Login success !');
-        //   this.navCtrl.setRoot( HomePage );
-        // });
-=======
+
       this.philgoMember.login( this.form, ( login: USER_LOGIN_DATA ) => {
         this.xbaseLogin( () => {
           alert('Login success !');
           this.navCtrl.setRoot( HomePage );
         });
->>>>>>> e084d72035e79eb2c1aaf7a2401eb60cf7a896cf
+
       },
       e => {
         this.process = { 'error' : e };
