@@ -42,5 +42,12 @@ export class Core {
     return id + '@Sp,.96@' + random_str ;
   }
 
+  /**
+   * @note
+   */
+  getBackendID( id ) {
+    return id + '@sonub.com';
+  }
+
 
 }

@@ -14,23 +14,26 @@
 <ion-content padding>
 
     <ion-list>
+
       <ion-item>
-        <div (click)="onClickPhoto()">
-        
-          <img [src]="urlPhoto">
-        </div>
-        <div *ngIf=" form?.varchar_1">
-          <button ion-button (click)="onClickDeletePhoto()">DELETE</button>
-        </div>
-        <input *ngIf=" core.isWeb " type="file" (change)="onChangeFile($event)">
-       
+        <section class="primary-photo">
+          <div (click)="onClickPhoto()">
+            <img [src]="urlPhoto">
+          </div>
+          <div *ngIf=" form.text_1">
+            <button ion-button (click)="onClickDeletePhoto()">DELETE</button>
+            <span *ngIf=" file_delete_begin ">
+              <ion-spinner></ion-spinner> Deleting ...
+            </span>
+          </div>
+          <input *ngIf=" core.isWeb " type="file" (change)="onChangeFile($event)">
+          <div *ngIf=" file_upload_begin ">
+            <progress [value]="file_upload_position" max="100"></progress>
+          </div>
+        </section>
       </ion-item>
 
 
-       <ion-item>
-        <ion-label floating>varchar_1</ion-label>
-        <ion-input [(ngModel)]="form.varchar_1" ></ion-input>
-      </ion-item>
 
       <ion-item *ngIf=" ! login ">
         <ion-label floating>User Id</ion-label>

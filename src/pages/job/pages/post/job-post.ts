@@ -23,6 +23,7 @@ export interface  PostEdit {
     country: string;
     extra_2: string; // year of experience
     gender: 'M' | 'F' | '';
+    profession: '';
     attachment_1?: string;
     attachment_2?: string;
     attachment_3?: string;

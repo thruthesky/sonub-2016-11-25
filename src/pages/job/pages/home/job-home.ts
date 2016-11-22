@@ -51,6 +51,7 @@ export class JobHomePage {
         searchByAddress: 'Search by Address',
         searchByName: 'Search by Name',
         searchByCity: 'Search by City',
+        searchByProvince: 'Search by Province',
         searching: 'Searching',
         male: 'Male',
         female: 'Female',

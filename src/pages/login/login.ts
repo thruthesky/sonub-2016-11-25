@@ -23,7 +23,7 @@ export class LoginPage {
     private auth: Auth,
     private user: User,
     public core: Core,
-    private member: Member,
+    private philgoMember: Member,
     private xbase: Xbase
 
     ) {
@@ -40,7 +40,7 @@ export class LoginPage {
   onClickLogin() {
     console.log("LoginPage::onClickLogin() form: ", this.form);
     this.process = { 'loader' : true };
-      this.member.login( this.form, ( login: USER_LOGIN_DATA ) => {
+      this.philgoMember.login( this.form, ( login: USER_LOGIN_DATA ) => {
         this.xbaseLogin( () => {
           alert('Login success !');
           this.navCtrl.setRoot( HomePage );
@@ -58,6 +58,7 @@ export class LoginPage {
       successCallback();
     }, e => {
       console.error('error login xbase: ' + e);
+      this.process = { 'error' : 'Xbase Login Error : ' + e };
     });
   }
 
@@ -95,10 +96,7 @@ export class LoginPage {
         let details: any = this.user.details;
         let twitter_id: string = details.twitter_id;
         let id = twitter_id + '@twitter.com';
-        this.user.set('password', this.core.getRandomString( id ) );
-        this.registerPhilgo( id, re => this.registerXbase(id, session_id =>{
-          console.log('register success: session_id: ', session_id);
-        }) );
+        this.loginOrRegisterBackend( id );
 
       })
       .catch( e => {
@@ -119,9 +117,40 @@ export class LoginPage {
 
   }
 
-  onClickRegister() {
-    this.navCtrl.push( RegisterPage );
+  /**
+   * 
+   * @param id - must be in email-format like '1234@tiwtter.com'
+   * @note To know if the user already registered or not, check password on ionic cloud auth user data.
+   * 
+   * 1. login and return.
+   * 2. if login fails, register.
+   *    2.1 create password and save.
+   */
+  loginOrRegisterBackend( id ) {
+    // get user password.
+    let password = this.user.get('password', '');
+    if ( password ) this.loginBackend( id, password );
+    else this.registerBackend( id );
   }
+  loginBackend( id, password ) {
+    console.log("LoginPage::loginBackend()");
+      this.philgoMember.login( this.form, ( login: USER_LOGIN_DATA ) => {
+        this.xbaseLogin( () => {
+          console.log('PhilGo & Xbase Login success !');
+          this.navCtrl.setRoot( HomePage );
+        });
+      },
+      e => {
+        console.log("error login: ", e);
+      });
+  }
+  registerBackend( id ) {
+        this.user.set('password', this.core.getRandomString( id ) );
+        this.registerPhilgo( id, re => this.registerXbase(id, session_id =>{
+          console.log('register success: session_id: ', session_id);
+        }) );
+  }
+
 
   /**
    * Register philgo.com
@@ -133,12 +162,12 @@ export class LoginPage {
       nickname: id,
       password: password,
       name: id,
-      email: id + '@gmail.com',
+      email: id,
       mobile: '01234567890',
       gender: 'M'
     };
     console.log('registerPhilgo() data: ', data);
-    this.member.register( data , () => {
+    this.philgoMember.register( data , () => {
       console.log('registerPhilgo() : success');
       callback();
     }, e => console.log('registerPhilgo() failed: ', e) );
@@ -151,7 +180,7 @@ export class LoginPage {
     let registerData = {
       id: id,
       password: password,
-      email: id + '@philgo.com'
+      email: id
     };
     console.log("registerXbase: registerData: ", registerData);
     this.xbase.user_register( registerData, session_id => {
@@ -162,4 +191,9 @@ export class LoginPage {
 
   }
 
+
+
+  onClickRegister() {
+    this.navCtrl.push( RegisterPage );
+  }
 }
