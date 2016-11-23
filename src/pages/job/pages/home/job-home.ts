@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { JobPostPage } from "../post/job-post";
+import { JobListPage } from "../list/job-list";
 import { Xbase } from '../../../../xbase-api/xbase';
 
 
@@ -84,6 +85,10 @@ export class JobHomePage {
 
     onClickJobPost() {
         this.navCtrl.push( JobPostPage );
+    }
+
+    onClickJobList() {
+        this.navCtrl.push( JobListPage );
     }
 
     showLoader() {

@@ -161,7 +161,7 @@ export class JobPostPage {
                     console.log('ID doesnt exist')
                 }
             }, e => {
-                console.log('postget failed: ' + e);
+                console.log('post get failed: ' + e);
             });
         }
     }
@@ -190,6 +190,19 @@ export class JobPostPage {
             this.data['birth_day'] = parseInt(str[2]);
         }
 
+
+        if(this.data.idx) {
+            this.post_edit();
+        }
+        else {
+            this.post_write();
+        }
+
+
+    }
+
+
+    post_write(){
         this.xbase.post_write( this.data ,
             re => {
                 console.log('post write success: re: ' + re);
@@ -205,6 +218,25 @@ export class JobPostPage {
             e => {
                 this.loader = false;
                 console.log('post write failed: ' + e );
+            });
+    }
+
+    post_edit(){
+        this.xbase.post_edit( this.data ,
+            re => {
+                console.log('post edit success: re: ' + re);
+                this.loader = false;
+                let alert = this.alertCtrl.create({
+                    title: 'SUCCESS',
+                    subTitle: 'Your post has been Updated.',
+                    buttons: ['OK']
+                });
+                alert.present();
+                this.navCtrl.pop();
+            },
+            e => {
+                this.loader = false;
+                console.log('post edit failed: ' + e );
             });
     }
 
@@ -241,11 +273,16 @@ export class JobPostPage {
             percent => {
                 this.position = percent;
                 console.log('percent: ' + this.position);
+                /*if(this.position == 100){
+                    if( this.data.attachment_1 ) {
+                        this.onClickDeletePhoto();
+                    }
+                }*/
                 this.renderPage();
             });
     }
 
-    onClickDeletePhoto( ref ) {
+    onClickDeletePhoto() {
         let data = this.data.attachment_1;
         if ( ! data ) return;
         let file;
