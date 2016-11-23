@@ -17,6 +17,8 @@ Social Netowrk Hub
 
     - [ ] JOB - don't let user input city, province. let them select to reduce human error on input.
     - [ ] JOB - don't let user input input Work experience, let them select.
+    - [] JOB - permission on deleting photos on firebase storage.
+    - [] JOB - firebase storage image cache double check.
 
     - [ ] @later Need to improve Xbase login password for security.
     - [ ] @later Philgo Logout and Xbase auto logout. At this time, when a user logs out in philgo, the user does not log out in xbase.
