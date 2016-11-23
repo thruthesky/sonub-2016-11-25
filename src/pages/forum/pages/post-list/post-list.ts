@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { NavParams } from 'ionic-angular';
 import { Post, POSTS } from '../../../../philgo-api/v2/post';
 @Component({
+    selector: 'page-post-list',
     templateUrl: 'post-list.html'
 })
 export class PostListPage {

@@ -10,10 +10,6 @@
   <h1>Sonub Homepage ... 2</h1>
 
 
-
-{{ 'home' | ln:{ day: 'Monday', time: '12:34' } }}
-{{ output |json }}
-
   <section *ngIf=" login ">
       <button ion-button (click)="onClickLogout()">LOGOUT</button>
       <button ion-button (click)="onClickProfileUpdate()">PROFILE UPDATE</button>
@@ -24,6 +20,12 @@
   </section>
 
       <button ion-button (click)="onClickForum()">Forum</button>
-
       <button ion-button (click)="onClickJob()">Job</button>
+
+
+  <ion-list>
+    <ion-item *ngFor=" let province of provinces " (click)="onClickProvince(province)">
+      {{ province }}
+    </ion-item>
+  </ion-list>
 </ion-content>

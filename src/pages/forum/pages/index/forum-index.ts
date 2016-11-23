@@ -4,6 +4,7 @@ import { PostListPage } from '../post-list/post-list';
 
 type FORUMS = Array< { name: Array<string>} >;
 @Component({
+    selector: 'page-forum-index',
     templateUrl: 'forum-index.html'
 })
 export class ForumIndexPage {

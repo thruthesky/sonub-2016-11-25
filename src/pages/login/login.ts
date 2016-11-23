@@ -162,6 +162,7 @@ export class LoginPage {
   }
   registerBackend( id ) {
         this.user.set('password', this.core.getRandomString( id ) );
+        this.user.save();
         this.registerPhilgo( id, re => this.registerXbase(id, session_id =>{
           console.log('register success: session_id: ', session_id);
         }) );
