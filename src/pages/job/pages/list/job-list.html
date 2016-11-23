@@ -9,21 +9,21 @@
 
     <ion-list>
         <ion-card  *ngFor=" let post of posts; let i = index; " >
-            <div *ngIf="post.attachment_1?.url" class="avatar">
+            <div *ngIf="post.attachment_1" class="avatar" (click)="moreButton[i] = !moreButton[i]">
                 <img [src]="post.attachment_1?.url"/>
             </div>
             <ion-card-content no-padding>
                 <div>
-                    <ion-card-title>
+                    <ion-card-title padding-left (click)="moreButton[i] = !moreButton[i]">
                         {{ post.title }}
                     </ion-card-title>
-                    <p>
+                    <p padding-left (click)="moreButton[i] = !moreButton[i]">
                         {{ post.content }}
                     </p>
                 </div>
                 <div *ngIf="moreButton[i]">
                     <ion-item-group text-wrap>
-                        <ion-item-divider light>
+                        <ion-item-divider light (click)="moreButton[i] = !moreButton[i]">
                             {{text.personalInformation}}
                         </ion-item-divider>
                         <ion-item><ion-label>{{text.name}} : {{ post.first_name }} {{ post.middle_name }} {{ post.last_name }}</ion-label></ion-item>

@@ -18,9 +18,9 @@ export interface  PostEdit {
     last_name: string;
     mobile: string;
     birthday: string;
-    birth_year?: number;
-    birth_month?: number;
-    birth_day?: number;
+    birth_year?: number | string;
+    birth_month?: number | string;
+    birth_day?: number | string;
     address: string;
     city: string;
     province: string;
@@ -49,7 +49,6 @@ export interface FILE_UPLOADED {
     templateUrl: 'job-post.html'
 })
 export class JobPostPage {
-
     appTitle: string = "Post Edit";
     data : PostEdit = <PostEdit> {
         post_id: 'test',
@@ -58,11 +57,10 @@ export class JobPostPage {
     urlPhoto: string = urlPrimaryPhoto;
     loader: boolean = false;
     idx: number;
-    photoId: number = 0;
 
-    result = null;
-    progress = null;
-    error = null;
+    errorOnPost = null;
+
+    numbers = Array.from(new Array(20), (x,i) => i+1);
 
     file_progress:boolean = false;
     position = 0;
@@ -117,54 +115,93 @@ export class JobPostPage {
         this.idx = navParams.get('idx');
         console.info('navParams:: ' , this.idx);
 
-        if ( this.idx ) {
-            console.log("PostEditPage:: post edit id=" + this.idx);
-            //retrieve the data and display on their respective field
-            this.xbase.post_get( this.idx, re => {
-                console.log('post.get success: idx: ' + re['idx'], re);
-                if(re['idx']) {
-                    this.data.idx = re.idx;
-                    this.data.category_1 = re.category_1;
-                    this.data.post_id = re.post_id
-                    this.data.content= re.content;
-                    this.data.first_name = re.first_name;
-                    this.data.middle_name = re.middle_name;
-                    this.data.last_name = re.last_name;
-                    this.data.mobile = re.mobile;
+        this.test_add_user();
 
-                    let mm: string | number = re.birth_month;
-                    let dd: string | number = re.birth_day;
-                    if(dd<10){
-                        dd='0'+dd
-                    }
-                    if(mm<10){
-                        mm='0'+mm
-                    }
+        if ( this.idx ) this.load_post();
 
-                    this.data.birthday = re.birth_year +'-'+mm+'-'+dd;
-                    this.data.birth_year = re.birth_year;
-                    this.data.birth_month = re.birth_month;
-                    this.data.birth_day = re.birth_day;
-                    this.data.address = re.address;
-                    this.data.city = re.city;
-                    this.data.province = re.province;
-                    this.data.extra_2 = re.extra_2; // year of experience
-                    this.data.gender = re.gender;
-                    this.data.attachment_1 = re.attachment_1;
-                    if(this.data.attachment_1){
-                        let primary = JSON.parse(this.data.attachment_1);
-                        this.urlPhoto = primary.url;
-                    }
-                    console.log('this.data::', this.data);
-                }
-                else {
-                    console.log('ID doesnt exist')
-                }
-            }, e => {
-                console.log('post get failed: ' + e);
-            });
-        }
+
     }
+
+
+
+    test_add_user() {
+        this.data.category_1 = 'housemaid'
+        this.data.post_id = 'test'
+        this.data.content= 'post content'
+        this.data.first_name = 'first name';
+        this.data.middle_name = 'middle name';
+        this.data.last_name = 'last name';
+        this.data.mobile = '09157985472';
+
+        let mm: string | number = 6;
+        let dd: string | number = 24;
+        if(dd<10){
+            dd='0'+dd
+        }
+        if(mm<10){
+            mm='0'+mm
+        }
+
+        this.data.birthday = '1988' +'-'+mm+'-'+dd;
+        this.data.birth_year = 1988;
+        this.data.birth_month = mm;
+        this.data.birth_day = mm;
+        this.data.address = 'address';
+        this.data.city = 'city';
+        this.data.province = 'country';
+        this.data.extra_2 = '5'; // year of experience
+        this.data.gender = 'F';
+    }
+
+    load_post(){
+        console.log("PostEditPage:: post edit id=" + this.idx);
+        //retrieve the data and display on their respective field
+        this.xbase.post_get( this.idx, re => {
+            console.log('post.get success: idx: ' + re['idx'], re);
+            if(re['idx']) {
+                this.data.idx = re.idx;
+                this.data.category_1 = re.category_1;
+                this.data.post_id = re.post_id
+                this.data.content= re.content;
+                this.data.first_name = re.first_name;
+                this.data.middle_name = re.middle_name;
+                this.data.last_name = re.last_name;
+                this.data.mobile = re.mobile;
+
+                let mm: string | number = re.birth_month;
+                let dd: string | number = re.birth_day;
+                if(dd<10){
+                    dd='0'+dd
+                }
+                if(mm<10){
+                    mm='0'+mm
+                }
+
+                this.data.birthday = re.birth_year +'-'+mm+'-'+dd;
+                this.data.birth_year = re.birth_year;
+                this.data.birth_month = re.birth_month;
+                this.data.birth_day = re.birth_day;
+                this.data.address = re.address;
+                this.data.city = re.city;
+                this.data.province = re.province;
+                this.data.extra_2 = re.extra_2; // year of experience
+                this.data.gender = re.gender;
+                this.data.attachment_1 = re.attachment_1;
+                if(this.data.attachment_1){
+                    let primary = JSON.parse(this.data.attachment_1);
+                    this.urlPhoto = primary.url;
+                }
+                console.log('this.data::', this.data);
+            }
+            else {
+                console.log('ID doesnt exist')
+            }
+        }, e => {
+            console.log('post get failed: ' + e);
+        });
+    }
+
+
 
     /**
      * Re-Renders Page.
@@ -182,6 +219,7 @@ export class JobPostPage {
 
     onClickPost() {
         this.loader = true;
+        this.errorOnPost = null;
         console.log(this.data['birthday']);
         if(this.data['birthday']) {
             let str = this.data['birthday'].split('-');
@@ -189,16 +227,12 @@ export class JobPostPage {
             this.data['birth_month'] = parseInt(str[1]);
             this.data['birth_day'] = parseInt(str[2]);
         }
-
-
         if(this.data.idx) {
             this.post_edit();
         }
         else {
             this.post_write();
         }
-
-
     }
 
 
@@ -236,6 +270,7 @@ export class JobPostPage {
             },
             e => {
                 this.loader = false;
+                this.errorOnPost = e;
                 console.log('post edit failed: ' + e );
             });
     }
@@ -273,11 +308,6 @@ export class JobPostPage {
             percent => {
                 this.position = percent;
                 console.log('percent: ' + this.position);
-                /*if(this.position == 100){
-                    if( this.data.attachment_1 ) {
-                        this.onClickDeletePhoto();
-                    }
-                }*/
                 this.renderPage();
             });
     }
@@ -359,11 +389,13 @@ export class JobPostPage {
                     this.onFileUploaded( uploaded.url, uploaded.ref );
                 },
                 e => {
-                    this.file_progress = true;
+                    this.file_progress = false;
                     alert( e );
                 },
                 percent => {
-
+                    this.position = percent;
+                    console.log('percent: ' + this.position);
+                    this.renderPage();
                 } );
         }, (err) => {
             alert(err);

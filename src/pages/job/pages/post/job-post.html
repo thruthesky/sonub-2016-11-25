@@ -98,7 +98,11 @@
 
         <ion-item>
             <ion-label floating>{{text.workExperience}}</ion-label>
-            <ion-input text-wrap [(ngModel)]="data.extra_2" ></ion-input>
+             <ion-select [(ngModel)]="data.extra_2" placeholder="Work Experience" margin-left>
+                <ion-option value="all" >Show All</ion-option>
+                <ion-option value="0" >no work experience</ion-option>
+                <ion-option *ngFor="let number of numbers" [value]="number" >{{number}} years</ion-option>
+            </ion-select>
         </ion-item>
 
         <ion-item>
@@ -108,11 +112,9 @@
 
     </ion-list>
 
+    <div warning *ngIf="errorOnPost">{{errorOnPost}}</div>
 
     <div *ngIf="loader">{{text.connectingToServer}}</div>
-
-
-
 
     <button ion-button block (click)="onClickPost()">
         {{text.submitPost}}
