@@ -46,6 +46,16 @@
     </ion-range>
   </ion-item>
 
+  <ion-label primary stacked>{{ text.workExperience }}</ion-label>
+  <ion-item>
+    <ion-label primary stacked></ion-label>
+    <ion-select [(ngModel)]="data.extra_2" placeholder="Work Experience" (ionChange)="search($event)" debounce="500" margin-left>
+      <ion-option value="all" >Show All</ion-option>
+      <ion-option value="0" >no work experience</ion-option>
+      <ion-option *ngFor="let number of numbers" [value]="number" >{{number}} years</ion-option>
+    </ion-select>
+  </ion-item>
+
   <ion-label primary stacked>{{ text.searchByCity }}</ion-label>
   <ion-searchbar [(ngModel)]="data.city" debounce="500" (ionInput)="search($event)" placeholder="Input City..."></ion-searchbar>
 
@@ -80,7 +90,7 @@
 
       <ion-item-group text-wrap *ngIf="moreButton[i]">
         <ion-item-divider light>
-          {{text.personalInformation}}
+          <span (click)="moreButton[i] = !moreButton[i]">{{text.personalInformation}}</span>
           <button ion-button clear small no-padding item-right (click)="onClickEdit(post.idx)">
             <ion-icon name='open'></ion-icon>
             &nbsp; {{text.edit}}

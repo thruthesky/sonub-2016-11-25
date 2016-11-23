@@ -42,7 +42,8 @@ export class JobListPage {
     loadPosts( infinite? ) {
         this.xbase.post_search({
             page: ++this.page,
-            limit: 12
+            limit: 12,
+            orderby: "idx DESC"
         }, re => {
             console.log(re);
             if ( infinite ) infinite.complete();
@@ -50,18 +51,7 @@ export class JobListPage {
         }, e => {
             console.log( "home search failed: " + e );
             if ( infinite ) infinite.complete();
-        })
-        /*this.xbase.post_search( args,
-                res => {
-                    console.log('xpost.gets::: ', res.data.rows);
-                    if ( infinite ) infinite.complete();
-                    this.displayPosts( res.data.rows );
-                } ,
-                e => {
-                    if ( infinite ) infinite.complete();
-                    console.log("fetch failed: ", e);
-                }
-            );*/
+        });
     }
 
     displayPosts( data ) {
