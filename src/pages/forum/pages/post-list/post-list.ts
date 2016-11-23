@@ -18,8 +18,8 @@ export class PostListPage {
 
 
         this.post.page( {post_id: this.post_id, page_no: 1}, (posts: POSTS) => {
-            /*
             console.log('posts:', posts);
+            /*
             console.log('point ad title: ', posts.ads[0].subject);
             console.log('comment user name: ', posts.posts[0].comments[0].member.name);
             */

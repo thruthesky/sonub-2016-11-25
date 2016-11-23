@@ -1,5 +1,5 @@
-import { NgModule } from '@angular/core';
-import { IonicApp, IonicModule } from 'ionic-angular';
+import { NgModule, ErrorHandler } from '@angular/core';
+import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { LanguageModule } from './language-module';
 import { FirebaseApiModule } from '../firebase-api/firebase-api-module';
 import { XbaseApiModule, LINKS as XBASE_API_LINKS } from '../xbase-api/xbase-api-module';
@@ -50,6 +50,6 @@ JOB_LINKS.map( e => links.push(e) );
     LoginPage,
     RegisterPage
   ],
-  providers: [ Core ],
+  providers: [ {provide: ErrorHandler, useClass: IonicErrorHandler }, Core ],
 })
 export class AppModule {}

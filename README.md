@@ -14,6 +14,10 @@ Social Netowrk Hub
     - [ ] Social login & Register/log in philgo and xbase 
         - @comment : to work on this part, livereload should work on GenyMotion. as of ionic cli 2.1.12 & app-scripts 0.0.46, when running in genymotion, cordova is working but when running with livereload, cordova is not found.
 
+
+    - [ ] JOB - don't let user input city, province. let them select to reduce human error on input.
+    - [ ] JOB - don't let user input input Work experience, let them select.
+
     - [ ] @later Need to improve Xbase login password for security.
     - [ ] @later Philgo Logout and Xbase auto logout. At this time, when a user logs out in philgo, the user does not log out in xbase.
 
