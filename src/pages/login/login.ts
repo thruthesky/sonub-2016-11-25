@@ -99,7 +99,13 @@ export class LoginPage {
 
     this.auth.login('google', { remember: true })
       .then( re => {
-        console.log(re);
+         console.log('user details: ');
+         console.log(this.user.details );
+
+        let details: any = this.user.details;
+        let google_id: string = details.google_id;
+        let id = google_id + '@google.com';
+        this.loginOrRegisterBackend( id );
       })
       .catch( e => {
         console.log(e);
@@ -132,6 +138,13 @@ export class LoginPage {
     this.auth.login('instagram', { remember: true })
       .then( re => {
         console.log(re);
+        console.log('user details: ');
+        console.log(this.user.details );
+
+        // let details: any = this.user.details;
+        // let instagram_id: string = details.instagram_id;
+        // let id = instagram_id + '@instagram.com';
+        // this.loginOrRegisterBackend( id );
       })
       .catch( e => {
         console.log(e);
