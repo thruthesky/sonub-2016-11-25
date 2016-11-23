@@ -54,8 +54,8 @@ export class LoginPage {
   }
   
   xbaseLogin( successCallback ) {
-    let data = {id: this.form.id, password: '~philgo.com@' + this.form.id};
-
+   // let data = {id: this.form.id, password: '~philgo.com@' + this.form.id};
+    let data = {id: this.form.id, password: this.form.password};
     this.xbase.user_login( data, session_id => {
       console.log("xbaseLogin() : success : session_id: " + session_id )
       successCallback();
@@ -82,7 +82,13 @@ export class LoginPage {
 
     this.auth.login('facebook', { remember: true })
       .then( re => {
-        console.log(re);
+         console.log('user details: ');
+         console.log(this.user.details );
+
+        let details: any = this.user.details;
+        let facebook_id: string = details.facebook_id;
+        let id = facebook_id + '@facebook.com';
+        this.loginOrRegisterBackend( id );
       })
       .catch( e => {
         console.log(e);
@@ -93,7 +99,13 @@ export class LoginPage {
 
     this.auth.login('google', { remember: true })
       .then( re => {
-        console.log(re);
+         console.log('user details: ');
+         console.log(this.user.details );
+
+        let details: any = this.user.details;
+        let google_id: string = details.google_id;
+        let id = google_id + '@google.com';
+        this.loginOrRegisterBackend( id );
       })
       .catch( e => {
         console.log(e);
@@ -126,6 +138,13 @@ export class LoginPage {
     this.auth.login('instagram', { remember: true })
       .then( re => {
         console.log(re);
+        console.log('user details: ');
+        console.log(this.user.details );
+
+        // let details: any = this.user.details;
+        // let instagram_id: string = details.instagram_id;
+        // let id = instagram_id + '@instagram.com';
+        // this.loginOrRegisterBackend( id );
       })
       .catch( e => {
         console.log(e);
@@ -144,12 +163,18 @@ export class LoginPage {
    */
   loginOrRegisterBackend( id ) {
     // get user password.
-    let password = this.user.get('password', '');
+    let password = this.user.get('password','');
+    console.log('Password', password);
     if ( password ) this.loginBackend( id, password );
     else this.registerBackend( id );
   }
+
+
+
   loginBackend( id, password ) {
     console.log("LoginPage::loginBackend()");
+    this.form.id = id;
+    this.form.password = password;
       this.philgoMember.login( this.form, ( login: USER_LOGIN_DATA ) => {
         this.xbaseLogin( () => {
           console.log('PhilGo & Xbase Login success !');
@@ -160,6 +185,7 @@ export class LoginPage {
         console.log("error login: ", e);
       });
   }
+  
   registerBackend( id ) {
         this.user.set('password', this.core.getRandomString( id ) );
         this.user.save();

@@ -10,6 +10,7 @@ export interface SearchData {
     name: string;
     city: string;
     province: string;
+    extra_2: string;
     male: boolean;
     female: boolean;
     age?: {
@@ -40,11 +41,14 @@ export class JobHomePage {
     date = new Date();
     fullYear = this.date.getFullYear();
 
+    numbers = Array.from(new Array(20), (x,i) => i+1);
+
     data: SearchData = {
         category_1: 'housemaid',
         name: '',
         city: '',
         province: '',
+        extra_2: 'all', //work experience
         male: false,
         female: false
     };
@@ -58,6 +62,7 @@ export class JobHomePage {
         searchByCity: 'Search by City',
         searchByProvince: 'Search by Province',
         searching: 'Searching',
+        workExperience: 'Work Experience',
         male: 'Male',
         female: 'Female',
         between: 'Between',
@@ -110,28 +115,30 @@ export class JobHomePage {
 
         if( this.data.category_1 != 'all') cond += " AND category_1 = '"+ this.data.category_1 +"'";
 
-        if((this.data.male) && ( ! this.data.female)) {
+        if(( this.data.male ) && ( ! this.data.female )) {
             cond += " AND gender = 'M'";
         }
-        else if ((! this.data.male) && (this.data.female)) {
+        else if (( ! this.data.male ) && ( this.data.female )) {
             cond += " AND gender = 'F'";
         }
 
-        if(this.data.city ) cond += " AND city LIKE '%" + this.data.city + "%' ";
-        if(this.data.province ) cond += " AND province LIKE '%" + this.data.province + "%' ";
-        if(this.data.name ) cond += " AND first_name LIKE '%" + this.data.name + "%' ";
+        if( this.data.city ) cond += " AND city LIKE '%" + this.data.city + "%' ";
+        if( this.data.province ) cond += " AND province LIKE '%" + this.data.province + "%' ";
+        if( this.data.name ) cond += " AND first_name LIKE '%" + this.data.name + "%' ";
+        if( this.data.extra_2 != 'all' ) cond += " AND extra_2 <= '" + this.data.extra_2 + "'";
         console.log('search condition:: ', cond);
 
         this.posts = [];
         this.showLoader();
         this.xbase.post_search({
-            cond: cond
+            cond: cond,
+            orderby: 'idx DESC'
         }, re => {
             console.log(re);
             this.onSearchComplete( re );
         }, e => {
             console.log( "home search failed: " + e );
-        })
+        });
     }
 
     onSearchComplete( re ) {
