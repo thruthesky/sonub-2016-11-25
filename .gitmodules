@@ -10,3 +10,6 @@
 [submodule "src/philgo-api"]
 	path = src/philgo-api
 	url = http://github.com/thruthesky/philgo-api
+[submodule "xbase-api"]
+	path = xbase-api
+	url = https://github.com/thruthesky/xbase-api.git
