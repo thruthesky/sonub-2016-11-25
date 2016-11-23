@@ -6,6 +6,7 @@ import { FirebaseStorage } from '../../../../firebase-api/firebase-storage';
 
 
 export interface  PostEdit {
+    idx: number;
     category_1: string;
     post_id : string;
     title: string;
@@ -26,10 +27,20 @@ export interface  PostEdit {
     country: string;
     extra_2: string; // year of experience
     gender: 'M' | 'F' | '';
-    profession: '';
     attachment_1?: string;
-    attachment_2?: string;
-    attachment_3?: string;
+}
+
+export const urlPrimaryPhoto = 'assets/img/anonymous.gif';
+
+export interface FILE_UPLOAD {
+    file: any;
+    blob?: any;
+    ref?: string;
+    base64?: string;
+}
+export interface FILE_UPLOADED {
+    url: string;
+    ref: string;
 }
 
 
@@ -41,9 +52,10 @@ export class JobPostPage {
 
     appTitle: string = "Post Edit";
     data : PostEdit = <PostEdit> {
-        post_id: 'test'
+        post_id: 'test',
+        title: 'helper'
     };
-    urlPhoto: string = "assets/img/anonymous.gif";
+    urlPhoto: string = urlPrimaryPhoto;
     loader: boolean = false;
     idx: number;
     photoId: number = 0;
@@ -54,6 +66,10 @@ export class JobPostPage {
 
     file_progress:boolean = false;
     position = 0;
+
+    file_upload_begin: boolean = false;
+    file_delete_begin: boolean = false;
+    file_upload_position: number = 0;
 
     cordova: boolean = false;
 
@@ -102,16 +118,61 @@ export class JobPostPage {
         console.info('navParams:: ' , this.idx);
 
         if ( this.idx ) {
+            console.log("PostEditPage:: post edit id=" + this.idx);
             //retrieve the data and display on their respective field
+            this.xbase.post_get( this.idx, re => {
+                console.log('post.get success: idx: ' + re['idx'], re);
+                if(re['idx']) {
+                    this.data.idx = re.idx;
+                    this.data.category_1 = re.category_1;
+                    this.data.post_id = re.post_id
+                    this.data.content= re.content;
+                    this.data.first_name = re.first_name;
+                    this.data.middle_name = re.middle_name;
+                    this.data.last_name = re.last_name;
+                    this.data.mobile = re.mobile;
+
+                    let mm: string | number = re.birth_month;
+                    let dd: string | number = re.birth_day;
+                    if(dd<10){
+                        dd='0'+dd
+                    }
+                    if(mm<10){
+                        mm='0'+mm
+                    }
+
+                    this.data.birthday = re.birth_year +'-'+mm+'-'+dd;
+                    this.data.birth_year = re.birth_year;
+                    this.data.birth_month = re.birth_month;
+                    this.data.birth_day = re.birth_day;
+                    this.data.address = re.address;
+                    this.data.city = re.city;
+                    this.data.province = re.province;
+                    this.data.extra_2 = re.extra_2; // year of experience
+                    this.data.gender = re.gender;
+                    this.data.attachment_1 = re.attachment_1;
+                    if(this.data.attachment_1){
+                        let primary = JSON.parse(this.data.attachment_1);
+                        this.urlPhoto = primary.url;
+                    }
+                    console.log('this.data::', this.data);
+                }
+                else {
+                    console.log('ID doesnt exist')
+                }
+            }, e => {
+                console.log('post get failed: ' + e);
+            });
         }
     }
+
     /**
      * Re-Renders Page.
      * @note From JaeHo Song. It is considered a bug that it really does not bind properly. when the value changes, it does not reflect on page.
-     * 
+     *
      * @warning this method must be removed after the bug has been fixed from the Angular or Ionic
-     * 
-     * 
+     *
+     *
      */
     renderPage() {
         this.ngZone.run(() => {
@@ -121,7 +182,7 @@ export class JobPostPage {
 
     onClickPost() {
         this.loader = true;
-
+        console.log(this.data['birthday']);
         if(this.data['birthday']) {
             let str = this.data['birthday'].split('-');
             this.data['birth_year'] = parseInt(str[0]);
@@ -129,6 +190,19 @@ export class JobPostPage {
             this.data['birth_day'] = parseInt(str[2]);
         }
 
+
+        if(this.data.idx) {
+            this.post_edit();
+        }
+        else {
+            this.post_write();
+        }
+
+
+    }
+
+
+    post_write(){
         this.xbase.post_write( this.data ,
             re => {
                 console.log('post write success: re: ' + re);
@@ -147,6 +221,25 @@ export class JobPostPage {
             });
     }
 
+    post_edit(){
+        this.xbase.post_edit( this.data ,
+            re => {
+                console.log('post edit success: re: ' + re);
+                this.loader = false;
+                let alert = this.alertCtrl.create({
+                    title: 'SUCCESS',
+                    subTitle: 'Your post has been Updated.',
+                    buttons: ['OK']
+                });
+                alert.present();
+                this.navCtrl.pop();
+            },
+            e => {
+                this.loader = false;
+                console.log('post edit failed: ' + e );
+            });
+    }
+
     onFileUploaded( url, ref ) {
         console.log("onFileUploaded() : this : ", this);
         this.file_progress = false;
@@ -159,7 +252,9 @@ export class JobPostPage {
         };
         this.data.attachment_1 = JSON.stringify( attachment );
     }
-
+    getReferenceOfPrimaryPhoto( name ) {
+        return 'job-primary-photo/' + Date.now() + '/' + name;
+    }
     onChangeFile(event) {
         let file = event.target.files[0];
         if ( file === void 0 ) return;
@@ -167,29 +262,50 @@ export class JobPostPage {
         this.file_progress = true;
         //this.position = 50;
         //this.urlPhoto = file.name;
-        let ref = 'job-primary-photo/' + Date.now() + '/' + file.name;
+        let ref = this.getReferenceOfPrimaryPhoto( file.name );
         this.firebaseStorage.upload( { file: file, ref: ref }, uploaded => {
-            this.onFileUploaded( uploaded.url, uploaded.ref );
-        },
-        e => {
-            this.file_progress = false;
-            alert(e);
-        },
-        percent => {
-            this.position = percent;
-            console.log('percent: ' + this.position);
-            this.renderPage();
-        });
+                this.onFileUploaded( uploaded.url, uploaded.ref );
+            },
+            e => {
+                this.file_progress = false;
+                alert(e);
+            },
+            percent => {
+                this.position = percent;
+                console.log('percent: ' + this.position);
+                /*if(this.position == 100){
+                    if( this.data.attachment_1 ) {
+                        this.onClickDeletePhoto();
+                    }
+                }*/
+                this.renderPage();
+            });
     }
 
-    onClickDeletePhoto( ref ) {
-        /* this.file.delete( ref, () => {
-         this.urlPhoto = null;
-         this.data.urlPhoto = null;
-         this.data.refPhoto = null;
-         }, e => {
-         alert("FILE DELETE ERROR: " + e);
-         } ); */
+    onClickDeletePhoto() {
+        let data = this.data.attachment_1;
+        if ( ! data ) return;
+        let file;
+        try {
+            file = JSON.parse( data );
+        }
+        catch( e ) {
+            alert("JSON parse failed:");
+            return;
+        }
+        this.file_delete_begin = true;
+
+        this.firebaseStorage.delete( file.ref, () => {
+            this.file_delete_begin = false;
+            this.urlPhoto = urlPrimaryPhoto;
+            this.data.attachment_1 = null;
+            this.renderPage();
+
+        }, e => {
+            this.file_delete_begin = false;
+            alert("FILE DELETE ERROR: " + e);
+            this.renderPage();
+        } );
     }
 
     onClickPhoto() {
@@ -220,36 +336,38 @@ export class JobPostPage {
     }
 
     cameraTakePhoto( type: number ) {
-        /* console.log('cameraTakePhoto()');
-         let options = {
-         destinationType: Camera.DestinationType.DATA_URL,
-         sourceType: type,
-         encodingType: Camera.EncodingType.JPEG,
-         quality: 100
-         };
+        console.log('cameraTakePhoto()');
+        let options = {
+            destinationType: Camera.DestinationType.DATA_URL,
+            sourceType: type,
+            encodingType: Camera.EncodingType.JPEG,
+            quality: 100
+        };
 
-         Camera.getPicture(options).then((imageData) => {
-         this.file_progress = true;
-         let ref = 'user-primary-photo/' + Date.now() + '/' + 'primary-photo.jpg';
-         let data : FILE_UPLOAD = {
-         file : {
-         name: 'primary-photo.jpg',
-         type: 'image/jpeg'
-         },
-         ref: ref,
-         base64: imageData
-         };
-         this.file.upload( data, uploaded => {
-         this.onFileUploaded( uploaded.url, uploaded.ref );
-         },
-         e => {
-         this.file_progress = true;
-         alert( e );
-         },
-         percent => {
+        Camera.getPicture(options).then((imageData) => {
+            this.file_progress = true;
+            let ref = this.getReferenceOfPrimaryPhoto( 'primary-photo.jpg' );
+            let data : FILE_UPLOAD = {
+                file : {
+                    name: 'primary-photo.jpg',
+                    type: 'image/jpeg'
+                },
+                ref: ref,
+                base64: imageData
+            };
+            this.firebaseStorage.upload( data, uploaded => {
+                    this.onFileUploaded( uploaded.url, uploaded.ref );
+                },
+                e => {
+                    this.file_progress = true;
+                    alert( e );
+                },
+                percent => {
 
-         } );
-         }, (err) => { alert(err); }); */
+                } );
+        }, (err) => {
+            alert(err);
+        });
 
     }
 

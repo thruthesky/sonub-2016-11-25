@@ -10,11 +10,12 @@
   
 
   <button ion-button (click)="onClickJobPost()">Job Post</button>
-
+  <button ion-button (click)="onClickJobList()">Job List</button>
   <ion-label primary stacked>Work Profession</ion-label>
   <ion-item>
     <ion-label floating></ion-label>
-    <ion-select [(ngModel)]="data.profession" placeholder="Select Profession" margin-left>
+    <ion-select [(ngModel)]="data.category_1" placeholder="Select Profession" debounce="500" (ionChange)="search($event)" margin-left>
+      <ion-option value="all" >All</ion-option>
       <ion-option value="housemaid" >Housemaid</ion-option>
       <ion-option value="driver" >Driver</ion-option>
     </ion-select>
@@ -26,13 +27,13 @@
     <ion-col width-50>
       <ion-item>
         <ion-label>{{text.male}}</ion-label>
-        <ion-checkbox [(ngModel)]="data.male" (ionChange)="search($event)"></ion-checkbox>
+        <ion-checkbox [(ngModel)]="data.male" debounce="500" (ionChange)="search($event)"></ion-checkbox>
       </ion-item>
     </ion-col>
     <ion-col width-50>
       <ion-item>
         <ion-label>{{text.female}}</ion-label>
-        <ion-checkbox [(ngModel)]="data.female" (ionChange)="search($event)"></ion-checkbox>
+        <ion-checkbox [(ngModel)]="data.female" debounce="500" (ionChange)="search($event)"></ion-checkbox>
       </ion-item>
     </ion-col>
   </ion-row>
@@ -62,11 +63,11 @@
   <ion-list>
     <ion-item-group text-wrap *ngFor=" let post of posts; let i = index;  ">
       <ion-item-divider>
-        <ion-avatar item-left>
-          <img src="{{post?.image}}"/>
+        <ion-avatar *ngIf="post.attachment_1?.url" item-left (click)="moreButton[i] = !moreButton[i]">
+          <img src="{{post.attachment_1?.url}}"/>
         </ion-avatar>
-        <div>{{ post.title }}</div>
-        <div>{{ post.content }}</div>
+        <!--div (click)="moreButton[i] = !moreButton[i]">{{ post.title }}</div-->
+        <div (click)="moreButton[i] = !moreButton[i]">{{ post.content }}</div>
         <button ion-button clear small item-right no-padding (click)="moreButton[i] = !moreButton[i]" *ngIf="!moreButton[i]">
           <ion-icon name='arrow-dropdown-circle'></ion-icon>
           {{text.more}}
@@ -85,11 +86,11 @@
             &nbsp; {{text.edit}}
           </button>
         </ion-item-divider>
-        <ion-item><ion-label>{{text.name}} : </ion-label></ion-item>
-        <ion-item><ion-label>{{text.gender}} : </ion-label></ion-item>
-        <ion-item><ion-label>{{text.age}} : </ion-label></ion-item>
-        <ion-item><ion-label>{{text.mobile}} : </ion-label></ion-item>
-        <ion-item><ion-label>{{text.address}} : </ion-label></ion-item>
+        <ion-item><ion-label>{{text.name}} : {{ post.first_name }} {{ post.middle_name }} {{ post.last_name }}</ion-label></ion-item>
+        <ion-item><ion-label>{{text.gender}} : {{ post.gender }}</ion-label></ion-item>
+        <ion-item><ion-label>{{text.age}} : {{ fullYear - post.birth_year }}</ion-label></ion-item>
+        <ion-item><ion-label>{{text.mobile}} : {{ post.mobile }}</ion-label></ion-item>
+        <ion-item><ion-label>{{text.address}} : {{ post.address }} {{ post.city }} {{ post.province }}</ion-label></ion-item>
       </ion-item-group>
       <br />
     </ion-item-group>

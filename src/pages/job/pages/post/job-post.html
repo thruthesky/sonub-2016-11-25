@@ -36,7 +36,7 @@
 
         <ion-item>
             <ion-label floating>Work Profession</ion-label>
-            <ion-select [(ngModel)]="data.profession" placeholder="Select Profession" margin-left>
+            <ion-select [(ngModel)]="data.category_1" placeholder="Select Profession" margin-left>
                 <ion-option value="housemaid" >Housemaid</ion-option>
                 <ion-option value="driver" >Driver</ion-option>
             </ion-select>
@@ -53,11 +53,6 @@
         <ion-item>
             <ion-label floating>{{text.password}} ( is required to edit your own post )</ion-label>
             <ion-input [(ngModel)]="data.password"></ion-input>
-        </ion-item>
-
-        <ion-item>
-            <ion-label floating>{{text.email}}</ion-label>
-            <ion-input [(ngModel)]="data.email"></ion-input>
         </ion-item>
 
         <ion-item>
@@ -102,18 +97,8 @@
         </ion-item>
 
         <ion-item>
-            <ion-label floating>{{text.country}}</ion-label>
-            <ion-input text-wrap [(ngModel)]="data.country" ></ion-input>
-        </ion-item>
-
-        <ion-item>
             <ion-label floating>{{text.workExperience}}</ion-label>
             <ion-input text-wrap [(ngModel)]="data.extra_2" ></ion-input>
-        </ion-item>
-
-        <ion-item>
-            <ion-label floating>{{text.personalTitle}}</ion-label>
-            <ion-input [(ngModel)]="data.title"></ion-input>
         </ion-item>
 
         <ion-item>

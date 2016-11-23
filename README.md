@@ -14,6 +14,12 @@ Social Netowrk Hub
     - [ ] Social login & Register/log in philgo and xbase 
         - @comment : to work on this part, livereload should work on GenyMotion. as of ionic cli 2.1.12 & app-scripts 0.0.46, when running in genymotion, cordova is working but when running with livereload, cordova is not found.
 
+
+    - [ ] JOB - don't let user input city, province. let them select to reduce human error on input.
+    - [ ] JOB - don't let user input input Work experience, let them select.
+    - [] JOB - permission on deleting photos on firebase storage.
+    - [] JOB - firebase storage image cache double check.
+
     - [ ] @later Need to improve Xbase login password for security.
     - [ ] @later Philgo Logout and Xbase auto logout. At this time, when a user logs out in philgo, the user does not log out in xbase.
 
@@ -31,6 +37,7 @@ Social Netowrk Hub
 
 # Resources
 
+* [The Best App Design Resouces](https://market.ionic.io/themes)
 * [Mark Down  Cheatsheet](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet)
 * [Github MarkDown Guide](https://guides.github.com/features/mastering-markdown/)
 * [Resources for Design and Layout](https://drive.google.com/drive/u/0/folders/0B4u3qiWTgOC-UVA1ZkFkYjlQNk0)
@@ -58,6 +65,7 @@ Social Netowrk Hub
 * npm install --verbose
 * git submodule update --init
 * git submodule foreach git checkout master
+* npm install @types/lodash --save
 * ionic plugin add cordova-plugin-device --save
 * npm install @ionic/cloud-angular --save
 * App ID and settings are already done in the code. @see http://docs.ionic.io/setup.html#app-id
@@ -76,6 +84,9 @@ Social Netowrk Hub
 
 
 
+# Language Translation
+
+* @see src/pipes/language.ts
 
 # Security
 

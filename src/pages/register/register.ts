@@ -9,6 +9,7 @@ import { Core } from '../../providers/core';
 import { FirebaseStorage } from '../../firebase-api/firebase-storage';
 
 import { HomePage } from '../home/home';
+import * as _ from 'lodash';
 
 export const urlPrimaryPhoto = 'assets/img/anonymous.gif';
 
@@ -73,7 +74,7 @@ export class RegisterPage {
       this.form.mobile = re.user_mobile;
       this.form.gender = re.user_gender;
 
-      this.form.birthday = this.birthday( re.user_birth_year, re.user_birth_month, re.user_day );
+      this.form.birthday = this.birthday( re.user_birth_year, re.user_birth_month, re.user_birth_day );
       if ( re.user_text_1 === void 0 || re.user_text_1 == 'null' || ! re.user_text_1 ) this.form.text_1 = null;
       else {
         this.form.text_1 = re.user_text_1;
@@ -106,9 +107,7 @@ export class RegisterPage {
 
 
   birthday( year, month, day ) : string {
-    let m = parseInt( month );
-    let d = parseInt( day );
-    let bd = year + m < 10 ? '0' + m : m + d < 10 ? '0' + d : d;
+    let bd = year + '-' + _.padStart(month, 2, '0') + '-' + _.padStart(day, 2, '0');
     return <string> bd;
   }
 

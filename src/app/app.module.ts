@@ -1,11 +1,12 @@
-import { NgModule } from '@angular/core';
-import { IonicApp, IonicModule } from 'ionic-angular';
+import { NgModule, ErrorHandler } from '@angular/core';
+import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
+import { LanguageModule } from './language-module';
 import { FirebaseApiModule } from '../firebase-api/firebase-api-module';
 import { XbaseApiModule, LINKS as XBASE_API_LINKS } from '../xbase-api/xbase-api-module';
 import { PhilgoApiModule } from '../philgo-api/v2/philgo-api-module';
 import { IonicApiModule } from '../ionic-api/ionic-api-module';
 import { JobModule, LINKS as JOB_LINKS } from '../pages/job/app/job.module';
-import { ForumModule, LINKS as FORUM_LINKS } from '../pages/forum/forum-module';
+import { ForumModule, LINKS as FORUM_LINKS } from '../pages/forum/app/forum-module';
 import { Core } from '../providers/core';
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
@@ -34,6 +35,7 @@ JOB_LINKS.map( e => links.push(e) );
     IonicModule.forRoot(MyApp, {}, {
       links: links
     }),
+    LanguageModule,
     FirebaseApiModule,
     XbaseApiModule,
     PhilgoApiModule,
@@ -48,6 +50,6 @@ JOB_LINKS.map( e => links.push(e) );
     LoginPage,
     RegisterPage
   ],
-  providers: [ Core ]
+  providers: [ {provide: ErrorHandler, useClass: IonicErrorHandler }, Core ],
 })
 export class AppModule {}
