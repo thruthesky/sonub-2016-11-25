@@ -8,9 +8,12 @@
 </ion-header>
 
 <ion-content padding>
-    <ion-list>
+    <ion-list class='posts' text-wrap>
 
-        <ion-item *ngFor=" let post of posts.posts ">
+        <ion-item class='post' *ngFor=" let post of posts.posts; let i = index ">
+            <div class="post-form" *ngIf=" ! (i % 3) ">
+                <button ion-button>POST BUTTON</button>
+            </div>
 
             <div class="title">
                 {{ post.subject }}
@@ -20,7 +23,7 @@
 
             <div class="comments" *ngIf=" post.comments ">
                 <div class="comment" *ngFor=" let comment of post.comments ">
-                    {{ comment.content }}
+                    <div [innerHTML]=" comment.content "></div>
                 </div>
             </div>
         </ion-item>

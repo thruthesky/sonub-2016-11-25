@@ -24,6 +24,7 @@ import { Member,
 export class HomePage {
   login: USER_LOGIN_DATA = null;
   output: any = <any> {};
+  provinces: Array<string> = [];
   constructor(
     private platform: Platform,
     private navCtrl: NavController,

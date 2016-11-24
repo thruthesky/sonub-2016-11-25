@@ -72,17 +72,17 @@
 
   <ion-list>
     <ion-item-group text-wrap *ngFor=" let post of posts; let i = index;  ">
-      <ion-item-divider>
-        <ion-avatar *ngIf="post.attachment_1?.url" item-left (click)="moreButton[i] = !moreButton[i]">
+      <ion-item-divider (click)=" moreButton[i] = ! moreButton[i] ">
+        <ion-avatar *ngIf="post.attachment_1?.url" item-left>
           <img src="{{post.attachment_1?.url}}"/>
         </ion-avatar>
         <!--div (click)="moreButton[i] = !moreButton[i]">{{ post.title }}</div-->
-        <div (click)="moreButton[i] = !moreButton[i]">{{ post.content }}</div>
-        <button ion-button clear small item-right no-padding (click)="moreButton[i] = !moreButton[i]" *ngIf="!moreButton[i]">
+        <div>{{ post.content }}</div>
+        <button ion-button clear small item-right no-padding *ngIf="!moreButton[i]">
           <ion-icon name='arrow-dropdown-circle'></ion-icon>
           {{text.more}}
         </button>
-        <button ion-button clear small item-right no-padding (click)="moreButton[i] = !moreButton[i]" *ngIf="moreButton[i]">
+        <button ion-button clear small item-right no-padding *ngIf="moreButton[i]">
           <ion-icon name='arrow-dropup-circle'></ion-icon>
           {{text.less}}
         </button>
@@ -90,7 +90,7 @@
 
       <ion-item-group text-wrap *ngIf="moreButton[i]">
         <ion-item-divider light>
-          <span (click)="moreButton[i] = !moreButton[i]">{{text.personalInformation}}</span>
+          <span>{{text.personalInformation}}</span>
           <button ion-button clear small no-padding item-right (click)="onClickEdit(post.idx)">
             <ion-icon name='open'></ion-icon>
             &nbsp; {{text.edit}}
