@@ -1,13 +1,13 @@
 <ion-header>
   <ion-navbar>
     <ion-title>
-        Job Page
+      Job Page
     </ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
-  
+
 
   <button ion-button (click)="onClickJobPost()">Job Post</button>
   <button ion-button (click)="onClickJobList()">Job List</button>
@@ -56,11 +56,24 @@
     </ion-select>
   </ion-item>
 
-  <ion-label primary stacked>{{ text.searchByCity }}</ion-label>
-  <ion-searchbar [(ngModel)]="data.city" debounce="500" (ionInput)="search($event)" placeholder="Input City..."></ion-searchbar>
-
   <ion-label primary stacked>{{ text.searchByProvince }}</ion-label>
-  <ion-searchbar [(ngModel)]="data.province" debounce="500" (ionInput)="search($event)" placeholder="Input Province..."></ion-searchbar>
+  <ion-item>
+    <ion-label primary stacked></ion-label>
+    <ion-select [(ngModel)]="data.province" placeholder="Select Province" (ionChange)="search($event)" debounce="500" margin-left>
+      <ion-option value="all" >Show All</ion-option>
+      <ion-option *ngFor="let province of provinces" [value]="province" >{{province}}</ion-option>
+    </ion-select>
+  </ion-item>
+
+
+  <ion-label primary stacked *ngIf="showCities">{{ text.searchByCity }}</ion-label>
+  <ion-item *ngIf="showCities">
+    <ion-label primary stacked></ion-label>
+    <ion-select [(ngModel)]="data.city" placeholder="Select City" (ionChange)="search($event)" debounce="500" margin-left>
+      <ion-option value="all" >Show All</ion-option>
+      <ion-option *ngFor="let key of cityKeys" [value]="key" >{{cities[key]}}</ion-option>
+    </ion-select>
+  </ion-item>
 
   <ion-label primary stacked>{{ text.searchByName }}</ion-label>
   <ion-searchbar [(ngModel)]="data.name" debounce="500" (ionInput)="search($event)" placeholder="Input Name..."></ion-searchbar>
@@ -71,7 +84,7 @@
   </div>
 
   <ion-list>
-    <ion-item-group text-wrap *ngFor=" let post of posts; let i = index;  ">
+    <ion-card text-wrap *ngFor=" let post of posts; let i = index;  ">
       <ion-item-divider (click)=" moreButton[i] = ! moreButton[i] ">
         <ion-avatar *ngIf="post.attachment_1?.url" item-left>
           <img src="{{post.attachment_1?.url}}"/>
@@ -88,22 +101,19 @@
         </button>
       </ion-item-divider>
 
-      <ion-item-group text-wrap *ngIf="moreButton[i]">
-        <ion-item-divider light>
-          <span>{{text.personalInformation}}</span>
-          <button ion-button clear small no-padding item-right (click)="onClickEdit(post.idx)">
-            <ion-icon name='open'></ion-icon>
-            &nbsp; {{text.edit}}
-          </button>
-        </ion-item-divider>
+      <ion-list text-wrap *ngIf="moreButton[i]">
         <ion-item><ion-label>{{text.name}} : {{ post.first_name }} {{ post.middle_name }} {{ post.last_name }}</ion-label></ion-item>
         <ion-item><ion-label>{{text.gender}} : {{ post.gender }}</ion-label></ion-item>
         <ion-item><ion-label>{{text.age}} : {{ fullYear - post.birth_year }}</ion-label></ion-item>
         <ion-item><ion-label>{{text.mobile}} : {{ post.mobile }}</ion-label></ion-item>
         <ion-item><ion-label>{{text.address}} : {{ post.address }} {{ post.city }} {{ post.province }}</ion-label></ion-item>
-      </ion-item-group>
-      <br />
-    </ion-item-group>
+        <ion-item>
+          <button ion-button small item-right (click)="onClickEdit(post.idx)">
+            {{text.edit}}
+          </button>
+        </ion-item>
+      </ion-list>
+    </ion-card>
   </ion-list>
 
 </ion-content>

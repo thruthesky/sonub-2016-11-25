@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, AlertController } from 'ionic-angular';
 import { JobPostPage } from "../post/job-post";
 import { JobListPage } from "../list/job-list";
 import { Xbase } from '../../../../xbase-api/xbase';
+import { Location } from  '../../providers/location'
 
 
 export interface SearchData {
@@ -42,12 +43,15 @@ export class JobHomePage {
     fullYear = this.date.getFullYear();
 
     numbers = Array.from(new Array(20), (x,i) => i+1);
+    provinces: Array<string> = [];
+    cities = [];
+    showCities: boolean = false;
 
     data: SearchData = {
         category_1: 'housemaid',
         name: '',
-        city: '',
-        province: '',
+        city: 'all',
+        province: 'all',
         extra_2: 'all', //work experience
         male: false,
         female: false
@@ -79,8 +83,17 @@ export class JobHomePage {
         edit: 'Edit',
     };
     constructor(public navCtrl: NavController,
-                private xbase: Xbase
+                private alertCtrl: AlertController,
+                private xbase: Xbase,
+                private location: Location
     ) {
+
+        location.get_province( re => {
+           //console.log('success location.get_province::', re);
+            this.provinces = re;
+        }, e => {
+            console.log('error location.get_province::', e);
+        });
 
     }
 
@@ -103,15 +116,34 @@ export class JobHomePage {
         this.searching = false;
     }
 
+    get cityKeys() {
+        return Object.keys( this.cities );
+    }
+
     search( $event? ) {
         let cond = '';
         let today = new Date();
         let yy = today.getFullYear();
         let maxAge = yy-this.searchByAge.lower + 1;
         let minAge = yy-this.searchByAge.upper;
+        this.showCities = false;
 
         cond = "birth_year >= '"+minAge+"'";
         cond += " AND birth_year <= '"+maxAge+"'";
+
+        if( this.data.province != 'all') {
+            cond += " AND province = '"+ this.data.province +"'"
+            this.location.get_cities( this.data.province, re => {
+                console.log('cities', re);
+                if(re) {
+                    this.cities = re;
+                    this.showCities = true
+                }
+            }, e => {
+                console.log('error location.get_cities::', e);
+            });
+        }
+        if( this.data.city != 'all') cond += " AND city LIKE '%" + this.data.city + "%' ";
 
         if( this.data.category_1 != 'all') cond += " AND category_1 = '"+ this.data.category_1 +"'";
 
@@ -122,8 +154,6 @@ export class JobHomePage {
             cond += " AND gender = 'F'";
         }
 
-        if( this.data.city ) cond += " AND city LIKE '%" + this.data.city + "%' ";
-        if( this.data.province ) cond += " AND province LIKE '%" + this.data.province + "%' ";
         if( this.data.name ) cond += " AND first_name LIKE '%" + this.data.name + "%' ";
         if( this.data.extra_2 != 'all' ) cond += " AND extra_2 <= '" + this.data.extra_2 + "'";
         console.log('search condition:: ', cond);
@@ -162,7 +192,46 @@ export class JobHomePage {
 
 
     onClickEdit( idx ) {
-        this.navCtrl.push( JobPostPage, { idx: idx });
+        console.info('onClickEdit:: key' + idx);
+        this.inputPassword('Edit', password => {
+            this.xbase.post_permission( {idx: idx, password: password }, () => {
+                this.navCtrl.push( JobPostPage, { idx: idx });
+            }, e => {
+                alert( 'Error: ' + e );
+            })
+        });
     }
+
+    inputPassword( title, callback ) {
+        let prompt = this.alertCtrl.create({
+            title: title,
+            message: "Enter password of the post",
+            inputs: [
+                {
+                    name: 'password',
+                    placeholder: 'Input password'
+                },
+            ],
+            buttons: [
+                {
+                    text: 'Cancel',
+                    handler: data => {
+                        console.log('Cancel clicked');
+                    }
+                },
+                {
+                    text: 'SUBMIT',
+                    handler: data => {
+                        console.log('Delete clicked');
+                        //this.promptAlert( 'SUCCESS', 'Your post has been deleted.' );
+                        //this.deletePost( idx, data.password );
+                        callback( data.password );
+                    }
+                }
+            ]
+        });
+        prompt.present();
+    }
+
 
 }
