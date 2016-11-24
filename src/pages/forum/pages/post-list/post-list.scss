@@ -1,3 +1,17 @@
-.title {
-    color:red!important;
+.posts {
+    .post {
+        .title {
+            background-color: #efefef;
+            color:blue!important;
+        }
+    }
+}
+
+
+.comments {
+    .comment {
+        margin: 1em 0;
+        padding: 1em;
+        background-color: #dfdfdf;
+    }
 }

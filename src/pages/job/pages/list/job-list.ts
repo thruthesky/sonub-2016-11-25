@@ -75,13 +75,22 @@ export class JobListPage {
 
     onClickEdit( idx ) {
         console.info('onClickEdit:: key' + idx);
-        this.navCtrl.pop();
-        this.navCtrl.push( JobPostPage, { idx: idx });
+        this.inputPassword('Edit', password => {
+            this.xbase.post_permission( {idx: idx, password: password }, () => {
+                this.navCtrl.pop();
+                this.navCtrl.push( JobPostPage, { idx: idx });
+            }, e => {
+                alert( 'Error: ' + e );
+            })
+        });
+
     }
 
-    onClickDelete( postKey, i ) {
+
+
+    inputPassword( title, callback ) {
         let prompt = this.alertCtrl.create({
-            title: 'Delete',
+            title: title,
             message: "Enter password of the post",
             inputs: [
                 {
@@ -97,15 +106,33 @@ export class JobListPage {
                     }
                 },
                 {
-                    text: 'Delete',
+                    text: 'SUBMIT',
                     handler: data => {
                         console.log('Delete clicked');
                         //this.promptAlert( 'SUCCESS', 'Your post has been deleted.' );
+                        //this.deletePost( idx, data.password );
+                        callback( data.password );
                     }
                 }
             ]
         });
         prompt.present();
+    }
+
+    onClickDelete( idx, i ) {
+        this.inputPassword('Delete', password => {
+            this.deletePost( idx, password );
+        });
+    }
+
+    deletePost( idx, password ) {
+        let data = { idx: idx, password: password };
+        this.xbase.post_delete( data, () => {
+            console.log('post deleted: ');
+        }, e => {
+            console.log('error:' + e);
+            alert( 'error: ' + e );
+        });
     }
 
     promptAlert( title, message ) {

@@ -6,6 +6,8 @@ Social Netowrk Hub
 
 # TODO
 
+    - [] Simple input prompt box using ionic alertCtrl
+        @see job-list::onClickDelete()
     - [ ] If user has not photo, Photo Upload on User Profile. Social login users may have picture.
     - [ ] Post CRUD & Comment CRUD on PhilGo.com
     - [ ] Post CRUD & Comment CRUD on Xbase
@@ -38,6 +40,7 @@ Social Netowrk Hub
 # Resources
 
 * [The Best App Design Resouces](https://market.ionic.io/themes)
+* [Design Photos](https://www.shutterstock.com/en/)
 * [Mark Down  Cheatsheet](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet)
 * [Github MarkDown Guide](https://guides.github.com/features/mastering-markdown/)
 * [Resources for Design and Layout](https://drive.google.com/drive/u/0/folders/0B4u3qiWTgOC-UVA1ZkFkYjlQNk0)
