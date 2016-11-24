@@ -4,6 +4,8 @@ import { JobHomePage } from '../pages/home/job-home';
 import { JobPostPage } from '../pages/post/job-post';
 import { JobListPage } from "../pages/list/job-list";
 
+import { Location } from '../providers/location';
+
 export let LINKS = [
         { component: JobHomePage, name: 'JobHomePage', segment: 'job' },
         { component: JobPostPage, name: 'JobPostPage', segment: 'job/post' },
@@ -26,6 +28,6 @@ export let LINKS = [
       JobPostPage,
       JobListPage
   ],
-  providers: []
+  providers: [ Location ]
 })
 export class JobModule {}
