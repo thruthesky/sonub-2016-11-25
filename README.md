@@ -6,6 +6,11 @@ Social Netowrk Hub
 
 # TODO
 
+    - [] xbase-api needs https connection.
+        - philgo-api is already has https connection.
+        - one possible way to solve is to use philgo.com MySQL for xbase api.
+            -- converting may be simple since it is using ezSQL.
+
     - [] Simple input prompt box using ionic alertCtrl
         @see job-list::onClickDelete()
     - [ ] If user has not photo, Photo Upload on User Profile. Social login users may have picture.

@@ -1,7 +1,8 @@
 {
-  "name": "ionic-hello-world",
-  "author": "Ionic Framework",
-  "homepage": "http://ionicframework.com/",
+  "name": "sonub",
+  "version" : "1.0.1",
+  "author": "Withcenter Dev Team",
+  "homepage": "http://sonub.com/",
   "private": true,
   "scripts": {
     "ionic:build": "ionic-app-scripts build",
